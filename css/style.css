@@ -20,4 +20,10 @@ h1 {
     margin: 0px auto; /* this centers the flex container */
 
 }
+footer {
+    margin: 0px auto;
+    padding: 50px 75px;
+    text-align: center;
+    line-height: 25px;
+}
 
