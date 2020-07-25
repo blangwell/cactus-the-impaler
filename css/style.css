@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 body {
-    background-color: grey;
+    background-color: slategray;
     font-family: 'Press Start 2P', sans-serif;
 
 }
@@ -9,6 +9,7 @@ h1 {
     padding: 20px;
     line-height: 50px;
     text-align: center;
+    color: darkred;
 }
 #game-container {
     display: flex;
@@ -20,7 +21,7 @@ h1 {
     margin: 0px auto; /* this centers the flex container */
 
 }
-footer {
+footer p{
     margin: 0px auto;
     padding: 50px 75px;
     text-align: center;
