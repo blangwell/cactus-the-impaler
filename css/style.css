@@ -6,7 +6,18 @@ body {
 
 }
 h1 {
-    padding: 20px 0 10px 0;
+    padding: 20px;
+    line-height: 50px;
     text-align: center;
+}
+#game-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 10px solid black;
+    height: 320px; /* start low res and scale up for different devices*/
+    width: 480px;
+    margin: 0px auto; /* this centers the flex container */
+
 }
 
