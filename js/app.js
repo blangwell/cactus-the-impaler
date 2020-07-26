@@ -1,13 +1,14 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
-const themeMusic = new Audio('./assets/sounds/three-red-hearts-quiet.wav')
-
+const themeMusic = new Audio('./assets/sounds/three-red-hearts-quiet.wav');
+const goCactus = new Audio('./assets/sounds/go-cactus.wav');
 
 canvas.innerHeight = 320;
 canvas.innerWidth = 480;
 
 // ctx.fillStyle = 'rgba(0, 100, 0, 1';
 // const cactus = ctx.fillRect(100, 100, 32, 32);
+
 
 
 let x = 320;
@@ -21,19 +22,22 @@ function animate() {
     ctx.fillStyle = 'rgba(0, 0, 0, 1)'
     ctx.fillRect(x, 100, 32, 32); // cowering foe!
     x -= xVelocity; // move
+    themeMusic.play();
+    
+    
 };
+
+
 
 
 
 // main event listeners
 document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keypress', () => {
-        themeMusic.play();
+        goCactus.play(); // this works, only plays once, will need to be moved
         animate();
-    });
         
-    // document.addEventListener('keydown', startGame);
-    // document.addEventListener('keyup', gravityHandler);
+    });
 });
 
 
