@@ -25,8 +25,8 @@ let xVelocity = 2.5;
 function animate() {
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, innerWidth, innerHeight);
-    // let x = Math.random() * (canvas.innerWidth*2);
-    let y = 100;
+    ctx.fillStyle = 'rgba(0, 100, 0, 1'
+    ctx.fillRect(60, 100, 32, 32);
     ctx.beginPath();
     ctx.arc(x, 115, 15, 0, Math.PI * 2, false);
     ctx.strokeStyle = 'black';
