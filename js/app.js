@@ -1,11 +1,15 @@
 let gameStarted = false;
 let movementDisplay;
-let ctx;
 let game;
 let cactus;
 let enemy;
 
+const ctx = document.getElementById('game-space').getContext('2d');
+
 const pressStart = document.querySelector('#press-start');
+
+
+
 
 function Crawler(x, y, width, height, color) {// color will become sprite
     this.x = x;
