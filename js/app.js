@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('dom content loaded');
     document.addEventListener('keydown', startGame);
     document.addEventListener('keyup', gravityHandler);
-    
 });
 
 // first time user presses space, it starts the game

@@ -1,2 +1,2 @@
-# cactus-the-impaler
-Pacifistic Infinite Runner
+# CACTUS THE IMPALER
+A Pascifistic Infinite Runner where you play as the fiercest warrior time has ever known. CACTUS (pronouced CACK-TOOS, and don't you forget it, mortal.) CACTUS has slain many foes across the many battles of his bloody career. But now, the warrior heart of CACTUS has softened! He is mortified by his past deeds! He no longer longs for death and destruction! Help guide CACTUS away from the battlefield while protecting the enemies which cower before you. Onward mortal, to gentler times!
