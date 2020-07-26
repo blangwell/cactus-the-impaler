@@ -21,14 +21,16 @@ function Crawler(x, y, width, height, color) {// color will become sprite
 }
 
 const startGame = (event) => {
-    console.log(event);
-    console.log('game started!')
-    gameStarted = true;
-    pressStart.style.display = 'none';
+    if (!gameStarted) {
+        console.log('GAME START')
+        pressStart.style.display = 'none';
+        gameStarted = true;
+    } else {
+        movementHandler();
+    }
 }
 
 const movementHandler = (event) => {
-    
     console.log('the game has started');
 }
 
