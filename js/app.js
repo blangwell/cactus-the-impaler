@@ -5,19 +5,37 @@ canvas.innerHeight = 440;
 canvas.innerWidth = 480;
 
 ctx.fillStyle = 'rgba(0, 100, 0, 1';
-ctx.fillRect(100, 100, 32, 32);
+const cactus = ctx.fillRect(100, 100, 32, 32);
 
 // ctx.fillStyle = 'rgba(0, 0, 0, 1)';
 // ctx. fillRect(200, 112, 32, 16);
 
 // BASIC SQUARE RANDOMIZER LOGIC
-for (let i = 0; i < 3; i++) {
-    const x = Math.random() * canvas.innerWidth;
-    const y = 100;
-    ctx.fillStyle = 'rgba(0, 0, 0, 1)';
-    ctx.fillRect(x, y, 32, 32);
+// the enemies aren't random on screen
+// only generated randomly off screen
+// for (let i = 0; i < 3; i++) {
+//     let x = Math.random() * (canvas.innerWidth*2);
+//     let y = 100;
+//     ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+//     ctx.fillRect(x, y, 32, 32);
 
+// }
+let x = 320;
+let xVelocity = 2.5;
+function animate() {
+    requestAnimationFrame(animate);
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    // let x = Math.random() * (canvas.innerWidth*2);
+    let y = 100;
+    ctx.beginPath();
+    ctx.arc(x, 115, 15, 0, Math.PI * 2, false);
+    ctx.strokeStyle = 'black';
+    // ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+    ctx.stroke();
+    x -= xVelocity; // move
 }
+
+animate();
 
 // let gameStarted = false;
 // let movementDisplay;
