@@ -11,13 +11,13 @@ h1 {
     text-align: center;
     color: darkred;
 }
-canvas {
+#game-space {
     display: flex;
     justify-content: center;
     align-items: center;
     border: 10px solid black;
-    height: 320px; /* start low res and scale up for different devices*/
-    width: 480px;
+    /* height: 320px; start low res and scale up for different devices */
+    /* width: 480px; */
     margin: 0px auto; /* this centers the flex container */
 
 }
