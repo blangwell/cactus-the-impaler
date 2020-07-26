@@ -2,7 +2,9 @@ const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 const themeMusic = new Audio('./assets/sounds/three-red-hearts-quiet.wav');
 const goCactus = new Audio('./assets/sounds/go-cactus.wav');
+let gameStarted = false;
 
+// CANVAS CONFIGURATION
 canvas.innerHeight = 320;
 canvas.innerWidth = 480;
 
@@ -12,36 +14,46 @@ canvas.innerWidth = 480;
 
 
 let x = 320;
-let xVelocity = 4;
-function animate() {
-    
+let xScrollRate = 4;
+const animate = () => {
     requestAnimationFrame(animate);
+    themeMusic.play();
     ctx.clearRect(0, 0, innerWidth, innerHeight);
     ctx.fillStyle = 'rgba(0, 100, 0, 1' // dark green!
     ctx.fillRect(60, 100, 32, 32); // cactus!
     ctx.fillStyle = 'rgba(0, 0, 0, 1)'
     ctx.fillRect(x, 100, 32, 32); // cowering foe!
-    x -= xVelocity; // move
-    themeMusic.play();
-    
-    
+    x -= xScrollRate; // move
 };
 
+const keypressHandler = (e) => {
+    console.log(e);
+    // goCactus.play(); // this works, plays every keypress, need to move
+    
+    switch(e.keyCode) {
+        case (13):
+            if (!gameStarted) { // start the game
+                gameStarted = true;
+                console.log(gameStarted);
+                goCactus.play();
+                animate();
+            };
+    }
+}
 
-
-
+const startGame = () => {
+    goCactus.play();
+}
 
 // main event listeners
+// let gameStarted = false;
 document.addEventListener('DOMContentLoaded', () => {
-    document.addEventListener('keypress', () => {
-        goCactus.play(); // this works, only plays once, will need to be moved
-        animate();
-        
+    document.addEventListener('keydown', () => {
+        document.addEventListener('keydown', keypressHandler)
     });
 });
 
 
-// let gameStarted = false;
 // let movementDisplay;
 // let game;
 // let cactus;
@@ -50,11 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // const ctx = document.getElementById('game-space').getContext('2d');
 
 // const pressStart = document.querySelector('#press-start');
-
-const jump = () => {
-    
-}
-
 
 
 // function Crawler(x, y, width, height, color) {// color will become sprite
