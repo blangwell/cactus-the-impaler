@@ -24,6 +24,9 @@ class Character {
             ctx.fillStyle = this.color;
             ctx.fillRect(this.x, this.y, this.width, this.height)
         }
+        this.stopRender = function () {
+            ctx.clearRect(this.x, this.y, this.width, this.height);
+        }
     }
 };
 
@@ -41,7 +44,10 @@ const animate = () => {
         if (collisionCheck()) {
             console.log('collision');
             collisionSound.play();
+            // cancelAnimationFrame(animate);
+            xScrollRate = 0;
             resetGame();
+            
         };
 }
 };
@@ -81,12 +87,17 @@ const collisionCheck = () => {
         cactus.y + cactus.height > enemy.y &&
         cactus.y < enemy.y + enemy.height) {
             // console.log('collision detected successfully!');
+            enemy.stopRender();
             return true;
         }
 };
 
 const resetGame = () => {
-    gameMessage.style.display = 'block'
+    gameStarted = false;
+    gameMessage.style.display = 'block';
+    console.log('reset game should happen now')
+    themeMusic.pause();
+    themeMusic.currentTime = 0;
 }
 
 // main event listeners
