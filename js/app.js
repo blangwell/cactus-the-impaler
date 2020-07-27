@@ -48,13 +48,13 @@ const keypressHandler = (e) => {
             gameStarted = true;
             animate();
             break;
-        } else if (gameStarted) {
+        } else if (gameStarted) { //TODO prevent double jumps
             console.log('gameStarted :', gameStarted);
             cactus.y -= 40;
-            setInterval(() => {
+            setTimeout(() => { // cactus gravity!! 
                 if (cactus.y < 100) {
                     cactus.y += 40
-                }}, 1000);
+                }}, 500);
             break;
         }    
         default: 
