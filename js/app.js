@@ -2,6 +2,7 @@
 // const ctx = canvas.getContext('2d');
 const themeMusic = new Audio('./assets/sounds/three-red-hearts-quiet.wav');
 const goCactus = new Audio('./assets/sounds/go-cactus.wav');
+const jumpSound = new Audio('./assets/sounds/jump.wav');
 let gameStarted;
 let canvas;
 let ctx;
@@ -49,9 +50,10 @@ const keypressHandler = (e) => {
             gameStarted = true;
             animate();
             break;
-        } else if (gameStarted && !jumping) { //TODO prevent double jumps
+        } else if (gameStarted && !jumping) { 
             console.log('gameStarted :', gameStarted);
-            jumping = true;
+            jumping = true; // use jumping = true to prevent double jump
+            jumpSound.play(); 
             cactus.y -= 40;
             setTimeout(() => { // cactus gravity!! 
                 if (cactus.y < 100) {
