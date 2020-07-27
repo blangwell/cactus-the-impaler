@@ -1,5 +1,3 @@
-// const canvas = document.querySelector('canvas');
-// const ctx = canvas.getContext('2d');
 const themeMusic = new Audio('./assets/sounds/three-red-hearts-quiet.wav');
 const goCactus = new Audio('./assets/sounds/go-cactus.wav');
 const jumpSound = new Audio('./assets/sounds/jump.wav');
@@ -11,6 +9,7 @@ let ctx;
 let cactus;
 let enemy;
 let jumping = false; 
+let frameNo;
 
 class Character {
     constructor(x, y, height, width, color){
@@ -37,21 +36,27 @@ const animate = () => {
     if (gameStarted) {
         requestAnimationFrame(animate);
         ctx.clearRect(0, 0, innerWidth, innerHeight);
-        cactus.render();
+        frameNo++; // increment frameNo
+        cactus.render(); 
+        // this only creates one enemy. must refactor to generate randomly
+        // new compo    nent? 
         enemy = new Character(x, 100, 32, 32, '#000000'); // randomizer will go here
         enemy.render();
         x -= xScrollRate; // move
         if (collisionCheck()) {
             console.log('collision');
             collisionSound.play();
-            // cancelAnimationFrame(animate);
-            setTimeout(cactus.stopRender(), 5000)
             xScrollRate = 0;
             endGame();
             
         };
 }
 };
+
+// from w3 https://www.w3schools.com/graphics/game_obstacles.asp
+
+
+
 
 const keypressHandler = (e) => {
     console.log(e);    
@@ -74,7 +79,7 @@ const jump = () => {
     jumping = true; // use jumping = true to prevent double jump
     jumpSound.play(); 
     cactus.y -= 40;
-}
+};
 
 const gravityHandler = () => {
     console.log('gravity');
@@ -82,8 +87,8 @@ const gravityHandler = () => {
         while (cactus.y != 100) {
             jumping = false;
             cactus.y += 5
-        }}, 300);
-}
+        }}, 500);
+};
 
 
 const collisionCheck = () => {
@@ -101,36 +106,69 @@ const endGame = () => {
     gameStarted = false;
     gameMessage.style.display = 'block';
     gameMessage.textContent = 'CACTUS, NO!'
+    // cactus.stopRender();
     console.log('game should end now')
-    themeMusic.pause();
+    themeMusic.pause(); // stop music!
     themeMusic.currentTime = 0;
+
 };
 
 const playAgain = () => {
+    frameNo = 0;
     gameMessage.style.display = 'none';
     goCactus.play();
     themeMusic.play();
     gameStarted = true;
     animate();
-}
+};
 
-// main event listeners
-document.addEventListener('DOMContentLoaded', () => {
-    // DOM REFERENCE
+const canvasGame = () => {
     canvas = document.querySelector('canvas');
-    gameMessage = document.querySelector('#game-message');
+    
     // CANVAS CONFIGURATION
     canvas.innerHeight = 320;
     canvas.innerWidth = 480;
     ctx = canvas.getContext('2d');
 
-    // CHARACTER REFERENCES
+    // CHARACTER REF
     cactus = new Character(60, 100, 32, 32, '#006400');
+};
 
+// main event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    gameMessage = document.querySelector('#game-message');
     gameStarted = false;
-
+    canvasGame();
     document.addEventListener('keydown', keypressHandler);
 });
+
+
+// document.addEventListener('DOMContentLoaded', () => {
+//     // DOM REFERENCE
+//     canvas = document.querySelector('canvas');
+//     gameMessage = document.querySelector('#game-message');
+//     // CANVAS CONFIGURATION
+//     canvas.innerHeight = 320;
+//     canvas.innerWidth = 480;
+//     ctx = canvas.getContext('2d');
+
+//     // CHARACTER REFERENCES
+//     cactus = new Character(60, 100, 32, 32, '#006400');
+
+//     gameStarted = false;
+
+//     document.addEventListener('keydown', keypressHandler);
+// });
+// refactor as function
+// canvas = document.querySelector('canvas');
+//     gameMessage = document.querySelector('#game-message');
+//     // CANVAS CONFIGURATION
+//     canvas.innerHeight = 320;
+//     canvas.innerWidth = 480;
+//     ctx = canvas.getContext('2d');
+
+//     // CHARACTER REFERENCES
+//     cactus = new Character(60, 100, 32, 32, '#006400');
 
 // TODO character class constructor
 // TODO jump function 
