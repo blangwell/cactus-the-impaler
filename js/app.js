@@ -45,8 +45,9 @@ const animate = () => {
             console.log('collision');
             collisionSound.play();
             // cancelAnimationFrame(animate);
+            setTimeout(cactus.stopRender(), 5000)
             xScrollRate = 0;
-            resetGame();
+            endGame();
             
         };
 }
@@ -64,22 +65,39 @@ const keypressHandler = (e) => {
             animate();
             break;
         } else if (gameStarted && !jumping) { 
-            console.log('gameStarted :', gameStarted);
-            jumping = true; // use jumping = true to prevent double jump
-            jumpSound.play(); 
-            cactus.y -= 40;
-            setTimeout(() => { // cactus gravity!! 
-                if (cactus.y < 100) {
-                    cactus.y += 40
-                    jumping = false;
-                }}, 500);
-            
+            // console.log('gameStarted :', gameStarted);
+            // jumping = true; // use jumping = true to prevent double jump
+            // jumpSound.play(); 
+            // cactus.y -= 40;
+            jump();
+            gravityHandler();
             break;
         }    
         default: 
             console.log('wrong key');
     }
 };
+
+const jump = () => {
+    jumping = true; // use jumping = true to prevent double jump
+    jumpSound.play(); 
+    cactus.y -= 40;
+}
+
+const gravityHandler = () => {
+    console.log('gravity');
+    setTimeout(() => { // cactus gravity!! 
+        if (cactus.y < 100) {
+            jumping = false;
+            setInterval(() => {
+                if (cactus.y != 100) {
+                    jumping = false; // now he wont stay up long enough  
+                    cactus.y += 2}
+                }, 10)
+
+        }}, 500);
+}
+
 
 const collisionCheck = () => {
     if (cactus.x + cactus.width > enemy.x &&
@@ -92,12 +110,17 @@ const collisionCheck = () => {
         }
 };
 
-const resetGame = () => {
+const endGame = () => {
     gameStarted = false;
     gameMessage.style.display = 'block';
-    console.log('reset game should happen now')
+    gameMessage.textContent = 'CACTUS, NO!'
+    console.log('game should end now')
     themeMusic.pause();
     themeMusic.currentTime = 0;
+};
+
+const playAgain = () => {
+
 }
 
 // main event listeners
