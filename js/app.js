@@ -10,6 +10,8 @@ let cactus;
 let enemy;
 let jumping = false; 
 let frameNo;
+let x;
+let xScrollRate = 4;
 
 class Character {
     constructor(x, y, height, width, color){
@@ -29,10 +31,12 @@ class Character {
     }
 };
 
-let x = 320;
-let xScrollRate = 4;
 
+x = 320;
 const animate = () => {
+    xScrollRate = 4;
+    let distance = Math.round(frameNo/50);
+    console.log(distance);
     if (gameStarted) {
         requestAnimationFrame(animate);
         ctx.clearRect(0, 0, innerWidth, innerHeight);
@@ -43,11 +47,13 @@ const animate = () => {
         enemy = new Character(x, 100, 32, 32, '#000000'); // randomizer will go here
         enemy.render();
         x -= xScrollRate; // move
-        if (frameNo % 10 === 0 && enemy.x < 0){
+
+        if (frameNo % 2 === 0 && enemy.x < -enemy.width){
             x = 320
             enemy = new Character(x, 100, 32, 32, '#000000')
             enemy.render();
         }
+
         if (collisionCheck()) {
             console.log('collision');
             collisionSound.play();
@@ -55,24 +61,8 @@ const animate = () => {
             endGame();
             
         };
-}
+    }
 };
-
-// from w3 https://www.w3schools.com/graphics/game_obstacles.asp
-// add an array of obstacles and loop through it
-// let myObstacles = [];
-
-const collisionCheck = () => {
-    if (cactus.x + cactus.width > enemy.x &&
-        cactus.x < enemy.x + enemy.width &&
-        cactus.y + cactus.height > enemy.y &&
-        cactus.y < enemy.y + enemy.height) {
-            // console.log('collision detected successfully!');
-            enemy.stopRender();
-            return true;
-        }
-};
-
 
 const keypressHandler = (e) => {
     console.log(e);    
@@ -106,17 +96,16 @@ const gravityHandler = () => {
         }}, 500);
 };
 
-
-// const collisionCheck = () => {
-//     if (cactus.x + cactus.width > enemy.x &&
-//         cactus.x < enemy.x + enemy.width &&
-//         cactus.y + cactus.height > enemy.y &&
-//         cactus.y < enemy.y + enemy.height) {
-//             // console.log('collision detected successfully!');
-//             enemy.stopRender();
-//             return true;
-//         }
-// };
+const collisionCheck = () => {
+    if (cactus.x + cactus.width > enemy.x &&
+        cactus.x < enemy.x + enemy.width &&
+        cactus.y + cactus.height > enemy.y &&
+        cactus.y < enemy.y + enemy.height) {
+            // console.log('collision detected successfully!');
+            // enemy.stopRender();
+            return true;
+        }
+};
 
 const endGame = () => {
     gameStarted = false;
@@ -132,10 +121,11 @@ const endGame = () => {
 
 const playAgain = () => {
     frameNo = 0;
+    x = 320;
+    gameStarted = true;
     gameMessage.style.display = 'none';
     goCactus.play();
     themeMusic.play();
-    gameStarted = true;
     animate();
 };
 
@@ -152,10 +142,6 @@ const canvasGame = () => {
     cactus = new Character(60, 100, 32, 32, '#006400');
 };
 
-// w3 schools method
-
-
-
 // main event listeners
 document.addEventListener('DOMContentLoaded', () => {
     gameMessage = document.querySelector('#game-message');
@@ -164,6 +150,21 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', keypressHandler);
 });
 
+
+// from w3 https://www.w3schools.com/graphics/game_obstacles.asp
+// add an array of obstacles and loop through it
+// let myObstacles = [];
+
+// const collisionCheck = () => {
+//     if (cactus.x + cactus.width > enemy.x &&
+//         cactus.x < enemy.x + enemy.width &&
+//         cactus.y + cactus.height > enemy.y &&
+//         cactus.y < enemy.y + enemy.height) {
+//             // console.log('collision detected successfully!');
+//             enemy.stopRender();
+//             return true;
+//         }
+// };
 
 // document.addEventListener('DOMContentLoaded', () => {
 //     // DOM REFERENCE
