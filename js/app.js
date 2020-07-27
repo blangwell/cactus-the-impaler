@@ -7,6 +7,7 @@ let canvas;
 let ctx;
 let cactus;
 let enemy;
+let jumping = false; 
 
 class Character {
     constructor(x, y, height, width, color){
@@ -48,13 +49,16 @@ const keypressHandler = (e) => {
             gameStarted = true;
             animate();
             break;
-        } else if (gameStarted) { //TODO prevent double jumps
+        } else if (gameStarted && !jumping) { //TODO prevent double jumps
             console.log('gameStarted :', gameStarted);
+            jumping = true;
             cactus.y -= 40;
             setTimeout(() => { // cactus gravity!! 
                 if (cactus.y < 100) {
                     cactus.y += 40
+                    jumping = false;
                 }}, 500);
+            
             break;
         }    
         default: 
