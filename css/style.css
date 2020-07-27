@@ -11,6 +11,13 @@ h1 {
     text-align: center;
     color: darkred;
 }
+footer {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
 #game-space {
     display: flex;
     justify-content: center;
@@ -26,9 +33,12 @@ h1 {
 }
 
 footer p{
-    margin: 50px auto;
+    /* margin: 50px auto; */
     max-width: 400px;
-    text-align: center;
+    /* text-align: center; */
+    float: bottom;
+    justify-content: center;
+    justify-self: center;
     line-height: 25px;
 }
 

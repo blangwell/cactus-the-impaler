@@ -14,13 +14,14 @@ let x;
 let xScrollRate;
 
 class Character {
-    constructor(x, y, height, width, color){
+    constructor(x, y, height, width, color, xStart){
         this.x = x;
         this.y = y;
         this.height = height;
         this.width = width;
         this.color = color;
         this.alive = true;
+        this.xStart = xStart;
         this.render = function () {
             ctx.fillStyle = this.color;
             ctx.fillRect(this.x, this.y, this.width, this.height)
@@ -44,15 +45,17 @@ const animate = () => {
         frameNo++; // increment frameNo
 
         cactus.render(); 
-        enemy = new Character(x, 100, 32, 32, '#000000'); // randomizer will go here
-        enemy.render();
+        enemy = new Character(x, 100, 32, 32, '#000000', 320); // randomizer will go here
+        // enemy.x -= xScrollRate;
         x -= xScrollRate; // move
+        enemy.render();
 
         if (frameNo % 2 === 0 && enemy.x < -enemy.width){
-        // if (frameNo % Math.floor((Math.random() * Math.floor(2)) === 0)){
-            x = 320
-            enemy = new Character(x, 100, 32, 32, '#000000');
-            enemy.render();
+        // if (frameNo % Math.floor(Math.random() * Math.floor(12) === 0)){
+            x = 320;
+            nextEnemy = new Character(320, 100, 32, 32, '#000000');
+            nextEnemy.x -= xScrollRate;
+            nextEnemy.render();
         }
         // if (frameNo % Math.floor(Math.random() * Math.floor(10)))
 
@@ -113,8 +116,6 @@ const endGame = () => {
     gameStarted = false;
     gameMessage.style.display = 'block';
     gameMessage.textContent = 'CACTUS, NO!'
-    // cactus.stopRender();
-    console.log('game should end now')
     themeMusic.pause(); // stop music!
     themeMusic.currentTime = 0;
 
@@ -141,7 +142,7 @@ const canvasGame = () => {
     ctx = canvas.getContext('2d');
 
     // CHARACTER REF
-    cactus = new Character(60, 100, 32, 32, '#006400');
+    cactus = new Character(60, 100, 32, 32, '#006400', 60);
 };
 
 // main event listeners
