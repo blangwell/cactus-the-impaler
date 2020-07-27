@@ -8,9 +8,6 @@ let ctx;
 let cactus;
 let enemy;
 
-
-
-
 class Character {
     constructor(x, y, height, width, color){
         this.x = x;
@@ -35,7 +32,7 @@ const animate = () => {
         ctx.clearRect(0, 0, innerWidth, innerHeight);
         // themeMusic.play();
         cactus.render();
-        enemy = new Character(x, 100, 32, 32, '#ffffff');
+        enemy = new Character(x, 100, 32, 32, '#000000');
         enemy.render();
         x -= xScrollRate; // move
 }
@@ -54,13 +51,16 @@ const keypressHandler = (e) => {
         } else if (gameStarted) {
             console.log('gameStarted :', gameStarted);
             cactus.y -= 40;
+            setInterval(() => {
+                if (cactus.y < 100) {
+                    cactus.y += 40
+                }}, 1000);
             break;
         }    
         default: 
             console.log('wrong key');
     }
 }
-
 
 // main event listeners
 document.addEventListener('DOMContentLoaded', () => {
