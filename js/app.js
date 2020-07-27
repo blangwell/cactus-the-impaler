@@ -3,7 +3,7 @@
 const themeMusic = new Audio('./assets/sounds/three-red-hearts-quiet.wav');
 const goCactus = new Audio('./assets/sounds/go-cactus.wav');
 const jumpSound = new Audio('./assets/sounds/jump.wav');
-const fontFace = new FontFace('Press Start 2P', 'https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+const collisionSound = new Audio('./assets/sounds/explode.wav')
 let gameStarted;
 let gameMessage;
 let canvas;
@@ -34,12 +34,15 @@ const animate = () => {
     if (gameStarted) {
         requestAnimationFrame(animate);
         ctx.clearRect(0, 0, innerWidth, innerHeight);
-        // themeMusic.play();
         cactus.render();
-        enemy = new Character(x, 100, 32, 32, '#000000');
+        enemy = new Character(x, 100, 32, 32, '#000000'); // randomizer will go here
         enemy.render();
         x -= xScrollRate; // move
-        collisionCheck();
+        if (collisionCheck()) {
+            console.log('collision');
+            collisionSound.play();
+            resetGame();
+        };
 }
 };
 
@@ -77,9 +80,14 @@ const collisionCheck = () => {
         cactus.x < enemy.x + enemy.width &&
         cactus.y + cactus.height > enemy.y &&
         cactus.y < enemy.y + enemy.height) {
-            console.log('collision detected successfully!');
+            // console.log('collision detected successfully!');
+            return true;
         }
 };
+
+const resetGame = () => {
+    gameMessage.style.display = 'block'
+}
 
 // main event listeners
 document.addEventListener('DOMContentLoaded', () => {
@@ -97,8 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
     gameStarted = false;
 
     document.addEventListener('keydown', keypressHandler);
-
-    // let runGame = setInterval(animate, 60);
 });
 
 // TODO character class constructor
