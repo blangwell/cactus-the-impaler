@@ -3,7 +3,9 @@
 const themeMusic = new Audio('./assets/sounds/three-red-hearts-quiet.wav');
 const goCactus = new Audio('./assets/sounds/go-cactus.wav');
 const jumpSound = new Audio('./assets/sounds/jump.wav');
+const fontFace = new FontFace('Press Start 2P', 'https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 let gameStarted;
+let gameMessage;
 let canvas;
 let ctx;
 let cactus;
@@ -45,7 +47,8 @@ const keypressHandler = (e) => {
     console.log(e);    
     switch(e.keyCode) {
         case (13):
-        if (!gameStarted) {
+        if (!gameStarted) { // start the game  
+            gameMessage.style.display = 'none';
             goCactus.play();
             themeMusic.play();
             gameStarted = true;
@@ -82,7 +85,7 @@ const collisionCheck = () => {
 document.addEventListener('DOMContentLoaded', () => {
     // DOM REFERENCE
     canvas = document.querySelector('canvas');
-
+    gameMessage = document.querySelector('#game-message');
     // CANVAS CONFIGURATION
     canvas.innerHeight = 320;
     canvas.innerWidth = 480;
