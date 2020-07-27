@@ -37,6 +37,7 @@ const animate = () => {
         enemy = new Character(x, 100, 32, 32, '#000000');
         enemy.render();
         x -= xScrollRate; // move
+        collisionCheck();
 }
 };
 
@@ -66,7 +67,16 @@ const keypressHandler = (e) => {
         default: 
             console.log('wrong key');
     }
-}
+};
+
+const collisionCheck = () => {
+    if (cactus.x + cactus.width > enemy.x &&
+        cactus.x < enemy.x + enemy.width &&
+        cactus.y + cactus.height > enemy.y &&
+        cactus.y < enemy.y + enemy.height) {
+            console.log('collision detected successfully!');
+        }
+};
 
 // main event listeners
 document.addEventListener('DOMContentLoaded', () => {
