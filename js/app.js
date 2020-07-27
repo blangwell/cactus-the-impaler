@@ -13,6 +13,7 @@ let frameNo;
 let x;
 let xScrollRate;
 
+
 class Character {
     constructor(x, y, height, width, color, xStart){
         this.x = x;
@@ -34,6 +35,7 @@ class Character {
         }
     }
 };
+cactus = new Character(60, 100, 32, 32, '#006400', 60);
 
 
 x = 320;
@@ -75,18 +77,20 @@ x = 320;
 //     }
 // };
 
+xScrollRate = 4;
 
 const simpleAnimate = (character) => {
-    xScrollRate = 4;
     x = 320;
     canvas = document.querySelector('canvas');
     ctx = canvas.getContext('2d');
+    canvas.innerHeight = 320;
+    canvas.innerWidth = 480;
     if (gameStarted) {
         // requestAnimationFrame(simpleAnimate);
         ctx.clearRect(0, 0, innerWidth, innerHeight);
         frameNo++
-        character.x -= xScrollRate
-        character.render();
+        // cactus.x -= xScrollRate
+        cactus.render();
         // keypressHandler();
     }
 }
@@ -100,8 +104,8 @@ const keypressHandler = (e) => {
             simpleAnimate(cactus);
             break;
         } else if (gameStarted && !jumping) { 
-            jump();
-            gravityHandler();
+            cactus.y = jump();
+            cactus.y = gravityHandler();
             break;
         }    
         default: 
@@ -113,15 +117,17 @@ const jump = () => {
     jumping = true; // use jumping = true to prevent double jump
     jumpSound.play(); 
     cactus.y -= 40;
+    return cactus.y
 };
 
-const gravityHandler = () => {
+const gravityHandler = (character) => {
     console.log('gravity');
     setTimeout(() => { // cactus gravity!! 
         while (cactus.y != 100) {
             jumping = false;
             cactus.y += 5
         }}, 500);
+        return cactus.y;
 };
 
 const collisionCheck = () => {
@@ -152,28 +158,29 @@ const playAgain = () => {
     gameMessage.style.display = 'none';
     goCactus.play();
     themeMusic.play();
-    cactus = new Character(60, 100, 32, 32, '#006400', 60);
-    simpleAnimate(cactus);
-};
-
-const canvasGame = () => {
-    frameNo = 0;
-    // canvas = document.querySelector('canvas');
-    
-    // CANVAS CONFIGURATION
-    canvas.innerHeight = 320;
-    canvas.innerWidth = 480;
-
-    // CHARACTER REF
-    playAgain();
     // simpleAnimate(cactus);
 };
 
+// const canvasGame = () => {
+//     frameNo = 0;
+//     // canvas = document.querySelector('canvas');
+    
+//     // CANVAS CONFIGURATION
+//     
+
+//     // CHARACTER REF
+
+//     playAgain();
+//     // simpleAnimate(cactus);
+// };
+
 // main event listeners
 document.addEventListener('DOMContentLoaded', () => {
+    
     gameMessage = document.querySelector('#game-message');
     gameStarted = false;
     document.addEventListener('keydown', keypressHandler);
+    let runGame = setInterval(simpleAnimate, 60)
 });
 
 
