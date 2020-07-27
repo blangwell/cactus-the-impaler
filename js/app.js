@@ -1,14 +1,15 @@
-const canvas = document.querySelector('canvas');
-const ctx = canvas.getContext('2d');
+// const canvas = document.querySelector('canvas');
+// const ctx = canvas.getContext('2d');
 const themeMusic = new Audio('./assets/sounds/three-red-hearts-quiet.wav');
 const goCactus = new Audio('./assets/sounds/go-cactus.wav');
-let gameStarted = false;
+let gameStarted;
+let canvas;
+let ctx;
 let cactus;
 let enemy;
 
-// CANVAS CONFIGURATION
-canvas.innerHeight = 320;
-canvas.innerWidth = 480;
+
+
 
 class Character {
     constructor(x, y, height, width, color){
@@ -27,36 +28,59 @@ class Character {
 
 let x = 320;
 let xScrollRate = 4;
+
 const animate = () => {
-    requestAnimationFrame(animate);
-    themeMusic.play();
-    ctx.clearRect(0, 0, innerWidth, innerHeight);
-    cactus = new Character(60, 100, 32, 32, '#006400')
-    cactus.render();
-    enemy = new Character(x, 100, 32, 32, '#000000')
-    enemy.render();
-    x -= xScrollRate; // move
+    if (gameStarted) {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, innerWidth, innerHeight);
+        // themeMusic.play();
+        cactus.render();
+        enemy = new Character(x, 100, 32, 32, '#ffffff');
+        enemy.render();
+        x -= xScrollRate; // move
+}
 };
 
 const keypressHandler = (e) => {
     console.log(e);    
     switch(e.keyCode) {
         case (13):
-            if (!gameStarted) { // start the game
-                gameStarted = true;
-                console.log(gameStarted);
-                goCactus.play();
-                animate();
-            }; // jump call goes here
+        if (!gameStarted) {
+            goCactus.play();
+            themeMusic.play();
+            gameStarted = true;
+            animate();
+            break;
+        } else if (gameStarted) {
+            console.log('gameStarted :', gameStarted);
+            cactus.y -= 40;
+            break;
+        }    
+        default: 
+            console.log('wrong key');
     }
 }
 
 
 // main event listeners
 document.addEventListener('DOMContentLoaded', () => {
-    document.addEventListener('keydown', keypressHandler)
-    });
+    // DOM REFERENCE
+    canvas = document.querySelector('canvas');
 
+    // CANVAS CONFIGURATION
+    canvas.innerHeight = 320;
+    canvas.innerWidth = 480;
+    ctx = canvas.getContext('2d');
+
+    // CHARACTER REFERENCES
+    cactus = new Character(60, 100, 32, 32, '#006400');
+
+    gameStarted = false;
+
+    document.addEventListener('keydown', keypressHandler);
+
+    // let runGame = setInterval(animate, 60);
+});
 
 // TODO character class constructor
 // TODO jump function 
