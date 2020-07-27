@@ -11,7 +11,7 @@ let enemy;
 let jumping = false; 
 let frameNo;
 let x;
-let xScrollRate = 4;
+let xScrollRate;
 
 class Character {
     constructor(x, y, height, width, color){
@@ -24,6 +24,7 @@ class Character {
         this.render = function () {
             ctx.fillStyle = this.color;
             ctx.fillRect(this.x, this.y, this.width, this.height)
+            // this.x = 320;
         }
         this.stopRender = function () {
             ctx.clearRect(this.x, this.y, this.width, this.height);
@@ -41,18 +42,19 @@ const animate = () => {
         requestAnimationFrame(animate);
         ctx.clearRect(0, 0, innerWidth, innerHeight);
         frameNo++; // increment frameNo
+
         cactus.render(); 
-        // this only creates one enemy. must refactor to generate randomly
-        // new compo    nent? 
         enemy = new Character(x, 100, 32, 32, '#000000'); // randomizer will go here
         enemy.render();
         x -= xScrollRate; // move
 
         if (frameNo % 2 === 0 && enemy.x < -enemy.width){
+        // if (frameNo % Math.floor((Math.random() * Math.floor(2)) === 0)){
             x = 320
-            enemy = new Character(x, 100, 32, 32, '#000000')
+            enemy = new Character(x, 100, 32, 32, '#000000');
             enemy.render();
         }
+        // if (frameNo % Math.floor(Math.random() * Math.floor(10)))
 
         if (collisionCheck()) {
             console.log('collision');
