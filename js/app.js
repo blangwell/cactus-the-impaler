@@ -79,15 +79,10 @@ const jump = () => {
 const gravityHandler = () => {
     console.log('gravity');
     setTimeout(() => { // cactus gravity!! 
-        if (cactus.y < 100) {
+        while (cactus.y != 100) {
             jumping = false;
-            setInterval(() => {
-                if (cactus.y != 100) {
-                    jumping = false; // now he wont stay up long enough  
-                    cactus.y += 2}
-                }, 10)
-
-        }}, 500);
+            cactus.y += 5
+        }}, 300);
 }
 
 
