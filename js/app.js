@@ -3,15 +3,27 @@ const ctx = canvas.getContext('2d');
 const themeMusic = new Audio('./assets/sounds/three-red-hearts-quiet.wav');
 const goCactus = new Audio('./assets/sounds/go-cactus.wav');
 let gameStarted = false;
+let cactus;
+let enemy;
 
 // CANVAS CONFIGURATION
 canvas.innerHeight = 320;
 canvas.innerWidth = 480;
 
-// ctx.fillStyle = 'rgba(0, 100, 0, 1';
-// const cactus = ctx.fillRect(100, 100, 32, 32);
-
-
+class Character {
+    constructor(x, y, height, width, color){
+        this.x = x;
+        this.y = y;
+        this.height = height;
+        this.width = width;
+        this.color = color;
+        this.alive = true;
+        this.render = function () {
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.x, this.y, this.width, this.height)
+        }
+    }
+};
 
 let x = 320;
 let xScrollRate = 4;
@@ -19,17 +31,15 @@ const animate = () => {
     requestAnimationFrame(animate);
     themeMusic.play();
     ctx.clearRect(0, 0, innerWidth, innerHeight);
-    ctx.fillStyle = 'rgba(0, 100, 0, 1' // dark green!
-    ctx.fillRect(60, 100, 32, 32); // cactus!
-    ctx.fillStyle = 'rgba(0, 0, 0, 1)'
-    ctx.fillRect(x, 100, 32, 32); // cowering foe!
+    cactus = new Character(60, 100, 32, 32, '#006400')
+    cactus.render();
+    enemy = new Character(x, 100, 32, 32, '#000000')
+    enemy.render();
     x -= xScrollRate; // move
 };
 
 const keypressHandler = (e) => {
-    console.log(e);
-    // goCactus.play(); // this works, plays every keypress, need to move
-    
+    console.log(e);    
     switch(e.keyCode) {
         case (13):
             if (!gameStarted) { // start the game
@@ -37,21 +47,20 @@ const keypressHandler = (e) => {
                 console.log(gameStarted);
                 goCactus.play();
                 animate();
-            };
+            }; // jump call goes here
     }
 }
 
-const startGame = () => {
-    goCactus.play();
-}
 
 // main event listeners
-// let gameStarted = false;
 document.addEventListener('DOMContentLoaded', () => {
-    document.addEventListener('keydown', () => {
-        document.addEventListener('keydown', keypressHandler)
+    document.addEventListener('keydown', keypressHandler)
     });
-});
+
+
+// TODO character class constructor
+// TODO jump function 
+// TODO gravity function 
 
 
 // let movementDisplay;
