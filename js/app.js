@@ -43,6 +43,11 @@ const animate = () => {
         enemy = new Character(x, 100, 32, 32, '#000000'); // randomizer will go here
         enemy.render();
         x -= xScrollRate; // move
+        if (frameNo % 10 === 0 && enemy.x < 0){
+            x = 320
+            enemy = new Character(x, 100, 32, 32, '#000000')
+            enemy.render();
+        }
         if (collisionCheck()) {
             console.log('collision');
             collisionSound.play();
@@ -54,8 +59,19 @@ const animate = () => {
 };
 
 // from w3 https://www.w3schools.com/graphics/game_obstacles.asp
+// add an array of obstacles and loop through it
+// let myObstacles = [];
 
-
+const collisionCheck = () => {
+    if (cactus.x + cactus.width > enemy.x &&
+        cactus.x < enemy.x + enemy.width &&
+        cactus.y + cactus.height > enemy.y &&
+        cactus.y < enemy.y + enemy.height) {
+            // console.log('collision detected successfully!');
+            enemy.stopRender();
+            return true;
+        }
+};
 
 
 const keypressHandler = (e) => {
@@ -91,16 +107,16 @@ const gravityHandler = () => {
 };
 
 
-const collisionCheck = () => {
-    if (cactus.x + cactus.width > enemy.x &&
-        cactus.x < enemy.x + enemy.width &&
-        cactus.y + cactus.height > enemy.y &&
-        cactus.y < enemy.y + enemy.height) {
-            // console.log('collision detected successfully!');
-            enemy.stopRender();
-            return true;
-        }
-};
+// const collisionCheck = () => {
+//     if (cactus.x + cactus.width > enemy.x &&
+//         cactus.x < enemy.x + enemy.width &&
+//         cactus.y + cactus.height > enemy.y &&
+//         cactus.y < enemy.y + enemy.height) {
+//             // console.log('collision detected successfully!');
+//             enemy.stopRender();
+//             return true;
+//         }
+// };
 
 const endGame = () => {
     gameStarted = false;
@@ -110,6 +126,7 @@ const endGame = () => {
     console.log('game should end now')
     themeMusic.pause(); // stop music!
     themeMusic.currentTime = 0;
+
 
 };
 
@@ -123,6 +140,7 @@ const playAgain = () => {
 };
 
 const canvasGame = () => {
+    frameNo = 0;
     canvas = document.querySelector('canvas');
     
     // CANVAS CONFIGURATION
@@ -133,6 +151,10 @@ const canvasGame = () => {
     // CHARACTER REF
     cactus = new Character(60, 100, 32, 32, '#006400');
 };
+
+// w3 schools method
+
+
 
 // main event listeners
 document.addEventListener('DOMContentLoaded', () => {
