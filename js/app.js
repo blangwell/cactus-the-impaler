@@ -25,7 +25,9 @@ class Character {
         this.render = function () {
             ctx.fillStyle = this.color;
             ctx.fillRect(this.x, this.y, this.width, this.height)
-            // this.x = 320;
+            // // this.x = 320;
+            // this.x = this.xStart;
+            // this.x -= 4;
         }
         this.stopRender = function () {
             ctx.clearRect(this.x, this.y, this.width, this.height);
@@ -35,46 +37,67 @@ class Character {
 
 
 x = 320;
-const animate = () => {
-    xScrollRate = 4;
-    let distance = Math.round(frameNo/50);
-    console.log(distance);
-    if (gameStarted) {
-        requestAnimationFrame(animate);
-        ctx.clearRect(0, 0, innerWidth, innerHeight);
-        frameNo++; // increment frameNo
+// animate could take object as an arg? ? ?
+// enemy off the canvas stop the animation delete enemy. 
+// const animate = () => {
+//     xScrollRate = 4;
+//     let distance = Math.round(frameNo/50);
+//     console.log(distance);
+//     if (gameStarted) {
+//         requestAnimationFrame(animate);
+//         ctx.clearRect(0, 0, innerWidth, innerHeight);
+//         frameNo++; // increment frameNo
 
-        cactus.render(); 
-        enemy = new Character(x, 100, 32, 32, '#000000', 320); // randomizer will go here
-        // enemy.x -= xScrollRate;
-        x -= xScrollRate; // move
-        enemy.render();
+//         cactus.render(); 
+//         enemy = new Character(x, 100, 32, 32, '#000000', 320); // randomizer will go here
+//         // enemy.x -= xScrollRate;
+//         x -= xScrollRate; // move
+//         enemy.render();
 
-        if (frameNo % 2 === 0 && enemy.x < -enemy.width){
-        // if (frameNo % Math.floor(Math.random() * Math.floor(12) === 0)){
-            x = 320;
-            nextEnemy = new Character(320, 100, 32, 32, '#000000');
-            nextEnemy.x -= xScrollRate;
-            nextEnemy.render();
-        }
-        // if (frameNo % Math.floor(Math.random() * Math.floor(10)))
+//         // if (frameNo % 2 === 0 && enemy.x < -enemy.width){
 
-        if (collisionCheck()) {
-            console.log('collision');
-            collisionSound.play();
-            xScrollRate = 0;
-            endGame();
+//         let randomVar = Math.floor(Math.random() * Math.floor(27));
+//         if (frameNo % randomVar === 0){
+//             // x = 320;
+//             nextEnemy = new Character(320, 100, 32, 32, '#000000');
+//             nextEnemy.x -= xScrollRate;
+//             nextEnemy.render();
+//         }
+//         // if (frameNo % Math.floor(Math.random() * Math.floor(10)))
+
+//         if (collisionCheck()) {
+//             console.log('collision');
+//             collisionSound.play();
+//             xScrollRate = 0;
+//             endGame();
             
-        };
+//         };
+//     }
+// };
+
+
+const simpleAnimate = (character) => {
+    xScrollRate = 4;
+    x = 320;
+    canvas = document.querySelector('canvas');
+    ctx = canvas.getContext('2d');
+    if (gameStarted) {
+        // requestAnimationFrame(simpleAnimate);
+        ctx.clearRect(0, 0, innerWidth, innerHeight);
+        frameNo++
+        character.x -= xScrollRate
+        character.render();
+        // keypressHandler();
     }
-};
+}
 
 const keypressHandler = (e) => {
     console.log(e);    
     switch(e.keyCode) {
         case (13):
         if (!gameStarted) { // start the game  
-            playAgain();
+            playAgain()
+            simpleAnimate(cactus);
             break;
         } else if (gameStarted && !jumping) { 
             jump();
@@ -129,27 +152,27 @@ const playAgain = () => {
     gameMessage.style.display = 'none';
     goCactus.play();
     themeMusic.play();
-    animate();
+    cactus = new Character(60, 100, 32, 32, '#006400', 60);
+    simpleAnimate(cactus);
 };
 
 const canvasGame = () => {
     frameNo = 0;
-    canvas = document.querySelector('canvas');
+    // canvas = document.querySelector('canvas');
     
     // CANVAS CONFIGURATION
     canvas.innerHeight = 320;
     canvas.innerWidth = 480;
-    ctx = canvas.getContext('2d');
 
     // CHARACTER REF
-    cactus = new Character(60, 100, 32, 32, '#006400', 60);
+    playAgain();
+    // simpleAnimate(cactus);
 };
 
 // main event listeners
 document.addEventListener('DOMContentLoaded', () => {
     gameMessage = document.querySelector('#game-message');
     gameStarted = false;
-    canvasGame();
     document.addEventListener('keydown', keypressHandler);
 });
 
