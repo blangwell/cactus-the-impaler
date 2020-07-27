@@ -58,17 +58,9 @@ const keypressHandler = (e) => {
     switch(e.keyCode) {
         case (13):
         if (!gameStarted) { // start the game  
-            gameMessage.style.display = 'none';
-            goCactus.play();
-            themeMusic.play();
-            gameStarted = true;
-            animate();
+            playAgain();
             break;
         } else if (gameStarted && !jumping) { 
-            // console.log('gameStarted :', gameStarted);
-            // jumping = true; // use jumping = true to prevent double jump
-            // jumpSound.play(); 
-            // cactus.y -= 40;
             jump();
             gravityHandler();
             break;
@@ -120,7 +112,11 @@ const endGame = () => {
 };
 
 const playAgain = () => {
-
+    gameMessage.style.display = 'none';
+    goCactus.play();
+    themeMusic.play();
+    gameStarted = true;
+    animate();
 }
 
 // main event listeners
