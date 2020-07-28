@@ -6,7 +6,6 @@ let gameStarted;
 let gameMessage;
 let canvas;
 let ctx;
-let cactus;
 let enemy;
 let jumping = false; 
 let frameNo;
@@ -39,7 +38,8 @@ let xScrollRate;
 //     }
 
 
-
+// this should be enemy. have multiple enemies.
+// cactus should be an object, there is only one cactus.
 class Character {
     constructor(x, y, height, width, color){
         this.x = x;
@@ -64,7 +64,13 @@ class Character {
 // canvas = document.querySelector('canvas');
 // ctx = canvas.getContext('2d');
 
-cactus = new Character(60, 100, 32, 32, '#006400');
+let cactus = {
+    x : 60,
+    y : 100,
+    width : 32,
+    height : 32,
+    src : './assets/images/cactoos2.png'
+}
 enemy = new Character(320, 100, 32, 32, '#000000');
 
 
@@ -83,7 +89,10 @@ const simpleAnimate = (character) => {
         ctx.clearRect(0, 0, innerWidth, innerHeight);
         frameNo++
         // cactus.x -= xScrollRate
-        cactus.render();
+        cactus.src.onload = () => {
+            ctx.drawImage(cactus.src, cactus.x, cactus.y, 32, 32);
+        };
+        
         // character.render();
         // keypressHandler();
     }
@@ -164,44 +173,46 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', keypressHandler);
     let runGame = setInterval(simpleAnimate, 60)
 });
-            // x = 320;
-            // animate could take object as an arg? ? ?
-            // enemy off the canvas stop the animation delete enemy. 
-            // const animate = () => {
-            //     xScrollRate = 4;
-            //     let distance = Math.round(frameNo/50);
-            //     console.log(distance);
-            //     if (gameStarted) {
-            //         requestAnimationFrame(animate);
-            //         ctx.clearRect(0, 0, innerWidth, innerHeight);
-            //         frameNo++; // increment frameNo
+
+
+// x = 320;
+// animate could take object as an arg? ? ?
+// enemy off the canvas stop the animation delete enemy. 
+// const animate = () => {
+//     xScrollRate = 4;
+//     let distance = Math.round(frameNo/50);
+//     console.log(distance);
+//     if (gameStarted) {
+//         requestAnimationFrame(animate);
+//         ctx.clearRect(0, 0, innerWidth, innerHeight);
+//         frameNo++; // increment frameNo
+
+//         cactus.render(); 
+//         enemy = new Character(x, 100, 32, 32, '#000000', 320); // randomizer will go here
+//         // enemy.x -= xScrollRate;
+//         x -= xScrollRate; // move
+//         enemy.render();
+
+//         // if (frameNo % 2 === 0 && enemy.x < -enemy.width){
+
+//         let randomVar = Math.floor(Math.random() * Math.floor(27));
+//         if (frameNo % randomVar === 0){
+//             // x = 320;
+//             nextEnemy = new Character(320, 100, 32, 32, '#000000');
+//             nextEnemy.x -= xScrollRate;
+//             nextEnemy.render();
+//         }
+//         // if (frameNo % Math.floor(Math.random() * Math.floor(10)))
+
+//         if (collisionCheck()) {
+//             console.log('collision');
+//             collisionSound.play();
+//             xScrollRate = 0;
+//             endGame();
             
-            //         cactus.render(); 
-            //         enemy = new Character(x, 100, 32, 32, '#000000', 320); // randomizer will go here
-            //         // enemy.x -= xScrollRate;
-            //         x -= xScrollRate; // move
-            //         enemy.render();
-            
-            //         // if (frameNo % 2 === 0 && enemy.x < -enemy.width){
-            
-            //         let randomVar = Math.floor(Math.random() * Math.floor(27));
-            //         if (frameNo % randomVar === 0){
-            //             // x = 320;
-            //             nextEnemy = new Character(320, 100, 32, 32, '#000000');
-            //             nextEnemy.x -= xScrollRate;
-            //             nextEnemy.render();
-            //         }
-            //         // if (frameNo % Math.floor(Math.random() * Math.floor(10)))
-            
-            //         if (collisionCheck()) {
-            //             console.log('collision');
-            //             collisionSound.play();
-            //             xScrollRate = 0;
-            //             endGame();
-                        
-            //         };
-            //     }
-            // };
+//         };
+//     }
+// };
             
             // const canvasGame = () => {
                 //     frameNo = 0;
