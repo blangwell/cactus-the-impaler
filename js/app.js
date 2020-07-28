@@ -13,6 +13,32 @@ let frameNo;
 let x;
 let xScrollRate;
 
+// everytime a column goes off screen, another should be loaded
+// array of objects, enemies, background, etc
+
+// maybe we can draw all the enemies in advance
+// set their x positions to far off the canvas and scroll?
+// let cactusSprite = new Image();
+// cactusSprite.src = ('./assets/images/cactoos2.png');
+
+// function draw() {
+//     ctx.drawImage(background, 0, 0);
+//     ctx.drawImage(cactusSprite, x, y, width, height);
+//     ctx.drawImage(enemy, x, y, width, height);
+//     // array of obstacles
+//     enemyArray[0] = {
+//         x: canvas.width,
+//         y: 0
+//     };
+//     for (let i = 0; i< pipe.length; i++) {
+//         ctx.drawImage(enemy, enemyArray[i].x, enemyArray[i].y);
+//         enemyArray[i].x--;
+//         if (enemyArray[i].x == canvas.width - canvas.width/2){
+//             enemyArray.push(x: canvas.width, y: Math.floor(Math.random() * enemy.width) - enemy.x);
+//             }
+//     }
+
+
 
 class Character {
     constructor(x, y, height, width, color){
@@ -34,8 +60,14 @@ class Character {
         }
     }
 };
+
+// canvas = document.querySelector('canvas');
+// ctx = canvas.getContext('2d');
+
 cactus = new Character(60, 100, 32, 32, '#006400');
-enemy = new Character(320, 100, 32, 32, '#000000')
+enemy = new Character(320, 100, 32, 32, '#000000');
+
+
 
 
 xScrollRate = 4;
@@ -93,7 +125,7 @@ const keypressHandler = (e) => {
         };
         
 const collisionCheck = () => {
-    if (cactus.x + cactus.width > enemy.x &&
+    if (cactus.x + cactus.width > enemy.x && // will need to be refactored for enemy class
         cactus.x < enemy.x + enemy.width &&
         cactus.y + cactus.height > enemy.y &&
         cactus.y < enemy.y + enemy.height) {
