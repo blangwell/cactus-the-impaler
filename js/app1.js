@@ -27,21 +27,23 @@ enemyArray[0] = {
 }
 
 const draw = () => {
-    frames++;
+    // frames++;
     console.log(frames);
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.drawImage(cactus, cactusX, cactusY);
-
+    let randomNumber = -(Math.floor(Math.random() * Math.floor(50)))
+    // this spawns new enemies
     for (let i = 0; i < enemyArray.length; i++) {
         ctx.drawImage(enemy, enemyArray[i].x, 100);
         enemyArray[i].x -= 3;
         // this almost works!
-        if (enemyArray[i].x % 420 == 0) {
+        if (enemyArray[i].x % 507 == 0) {
             enemyArray.push({
                 x: canvas.width + cactus.width,
                 y: 100
             })
         }
+        console.log(enemyArray);
     }
     if (cactusY < 100 && cactusY >= 30) setTimeout(()=>{cactusY += gravity}, 1000);
     
