@@ -15,14 +15,13 @@ let xScrollRate;
 
 
 class Character {
-    constructor(x, y, height, width, color, xStart){
+    constructor(x, y, height, width, color){
         this.x = x;
         this.y = y;
         this.height = height;
         this.width = width;
         this.color = color;
         this.alive = true;
-        this.xStart = xStart;
         this.render = function () {
             ctx.fillStyle = this.color;
             ctx.fillRect(this.x, this.y, this.width, this.height)
@@ -35,47 +34,9 @@ class Character {
         }
     }
 };
-cactus = new Character(60, 100, 32, 32, '#006400', 60);
+cactus = new Character(60, 100, 32, 32, '#006400');
+enemy = new Character(320, 100, 32, 32, '#000000')
 
-
-x = 320;
-// animate could take object as an arg? ? ?
-// enemy off the canvas stop the animation delete enemy. 
-// const animate = () => {
-//     xScrollRate = 4;
-//     let distance = Math.round(frameNo/50);
-//     console.log(distance);
-//     if (gameStarted) {
-//         requestAnimationFrame(animate);
-//         ctx.clearRect(0, 0, innerWidth, innerHeight);
-//         frameNo++; // increment frameNo
-
-//         cactus.render(); 
-//         enemy = new Character(x, 100, 32, 32, '#000000', 320); // randomizer will go here
-//         // enemy.x -= xScrollRate;
-//         x -= xScrollRate; // move
-//         enemy.render();
-
-//         // if (frameNo % 2 === 0 && enemy.x < -enemy.width){
-
-//         let randomVar = Math.floor(Math.random() * Math.floor(27));
-//         if (frameNo % randomVar === 0){
-//             // x = 320;
-//             nextEnemy = new Character(320, 100, 32, 32, '#000000');
-//             nextEnemy.x -= xScrollRate;
-//             nextEnemy.render();
-//         }
-//         // if (frameNo % Math.floor(Math.random() * Math.floor(10)))
-
-//         if (collisionCheck()) {
-//             console.log('collision');
-//             collisionSound.play();
-//             xScrollRate = 0;
-//             endGame();
-            
-//         };
-//     }
-// };
 
 xScrollRate = 4;
 
@@ -91,6 +52,7 @@ const simpleAnimate = (character) => {
         frameNo++
         // cactus.x -= xScrollRate
         cactus.render();
+        // character.render();
         // keypressHandler();
     }
 }
@@ -99,37 +61,37 @@ const keypressHandler = (e) => {
     console.log(e);    
     switch(e.keyCode) {
         case (13):
-        if (!gameStarted) { // start the game  
-            playAgain()
-            simpleAnimate(cactus);
-            break;
-        } else if (gameStarted && !jumping) { 
-            cactus.y = jump();
-            cactus.y = gravityHandler();
-            break;
-        }    
-        default: 
+            if (!gameStarted) { // start the game  
+                playAgain()
+                simpleAnimate(enemy);
+                break;
+            } else if (gameStarted && !jumping) { 
+                // cactus.y = 
+                jump();
+                gravityHandler();
+                break;
+            }    
+            default: 
             console.log('wrong key');
-    }
-};
-
-const jump = () => {
-    jumping = true; // use jumping = true to prevent double jump
-    jumpSound.play(); 
-    cactus.y -= 40;
-    return cactus.y
-};
-
-const gravityHandler = (character) => {
-    console.log('gravity');
-    setTimeout(() => { // cactus gravity!! 
-        while (cactus.y != 100) {
-            jumping = false;
-            cactus.y += 5
-        }}, 500);
-        return cactus.y;
-};
-
+        }
+    };
+    
+    const jump = () => {
+        jumping = true; // use jumping = true to prevent double jump
+        jumpSound.play(); 
+        cactus.y -= 40;
+    };
+    
+    const gravityHandler = () => {
+        console.log('gravity');
+        setTimeout(() => { // cactus gravity!! 
+            while (cactus.y != 100) {
+                jumping = false;
+                cactus.y += 5
+            }}, 500);
+            return cactus.y;
+        };
+        
 const collisionCheck = () => {
     if (cactus.x + cactus.width > enemy.x &&
         cactus.x < enemy.x + enemy.width &&
@@ -139,7 +101,7 @@ const collisionCheck = () => {
             // enemy.stopRender();
             return true;
         }
-};
+    };
 
 const endGame = () => {
     gameStarted = false;
@@ -147,8 +109,8 @@ const endGame = () => {
     gameMessage.textContent = 'CACTUS, NO!'
     themeMusic.pause(); // stop music!
     themeMusic.currentTime = 0;
-
-
+    
+    
 };
 
 const playAgain = () => {
@@ -161,18 +123,6 @@ const playAgain = () => {
     // simpleAnimate(cactus);
 };
 
-// const canvasGame = () => {
-//     frameNo = 0;
-//     // canvas = document.querySelector('canvas');
-    
-//     // CANVAS CONFIGURATION
-//     
-
-//     // CHARACTER REF
-
-//     playAgain();
-//     // simpleAnimate(cactus);
-// };
 
 // main event listeners
 document.addEventListener('DOMContentLoaded', () => {
@@ -182,14 +132,64 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', keypressHandler);
     let runGame = setInterval(simpleAnimate, 60)
 });
-
-
-// from w3 https://www.w3schools.com/graphics/game_obstacles.asp
-// add an array of obstacles and loop through it
-// let myObstacles = [];
-
-// const collisionCheck = () => {
-//     if (cactus.x + cactus.width > enemy.x &&
+            // x = 320;
+            // animate could take object as an arg? ? ?
+            // enemy off the canvas stop the animation delete enemy. 
+            // const animate = () => {
+            //     xScrollRate = 4;
+            //     let distance = Math.round(frameNo/50);
+            //     console.log(distance);
+            //     if (gameStarted) {
+            //         requestAnimationFrame(animate);
+            //         ctx.clearRect(0, 0, innerWidth, innerHeight);
+            //         frameNo++; // increment frameNo
+            
+            //         cactus.render(); 
+            //         enemy = new Character(x, 100, 32, 32, '#000000', 320); // randomizer will go here
+            //         // enemy.x -= xScrollRate;
+            //         x -= xScrollRate; // move
+            //         enemy.render();
+            
+            //         // if (frameNo % 2 === 0 && enemy.x < -enemy.width){
+            
+            //         let randomVar = Math.floor(Math.random() * Math.floor(27));
+            //         if (frameNo % randomVar === 0){
+            //             // x = 320;
+            //             nextEnemy = new Character(320, 100, 32, 32, '#000000');
+            //             nextEnemy.x -= xScrollRate;
+            //             nextEnemy.render();
+            //         }
+            //         // if (frameNo % Math.floor(Math.random() * Math.floor(10)))
+            
+            //         if (collisionCheck()) {
+            //             console.log('collision');
+            //             collisionSound.play();
+            //             xScrollRate = 0;
+            //             endGame();
+                        
+            //         };
+            //     }
+            // };
+            
+            // const canvasGame = () => {
+                //     frameNo = 0;
+                //     // canvas = document.querySelector('canvas');
+                
+                //     // CANVAS CONFIGURATION
+                //     
+                
+                //     // CHARACTER REF
+                
+                //     playAgain();
+                //     // simpleAnimate(cactus);
+                // };
+                
+                // from w3 https://www.w3schools.com/graphics/game_obstacles.asp
+                // add an array of obstacles and loop through it
+                // let myObstacles = [];
+                
+                // const collisionCheck = () => {
+                    //     if (cactus.x + cactus.width > enemy.x &&
 //         cactus.x < enemy.x + enemy.width &&
 //         cactus.y + cactus.height > enemy.y &&
 //         cactus.y < enemy.y + enemy.height) {
