@@ -33,6 +33,10 @@ footer {
     padding: 5px;
 }
 
+#game-message:hover {
+    cursor: pointer;
+}
+
 footer p{
     /* margin: 50px auto; */
     font-size: 14px;
