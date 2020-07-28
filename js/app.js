@@ -94,6 +94,7 @@ class Cactus {
 //     height : 32,
 //     src : './assets/images/cactoos2.png'
 // }
+
 cactus = new Cactus(60, 100, 32, 32, './assets/images/cactoos2.png')
 
 xScrollRate = 4;
@@ -123,6 +124,7 @@ const keypressHandler = (e) => {
     switch(e.keyCode) {
         case (13):
             if (!gameStarted) { // start the game  
+                // call animation
                 playAgain()
                 break;
             } else if (gameStarted && !jumping) { 
