@@ -1,13 +1,14 @@
 // start from scratch - lets GO
-let game;
+let game = document.getElementById('game-space') ;
 let gameMessage;
 let ctx;
 const themeMusic = new Audio('./assets/sounds/three-red-hearts-quiet.wav');
 const goCactus = new Audio('./assets/sounds/go-cactus.wav');
 const jumpSound = new Audio('./assets/sounds/jump.wav');
+// add background image source
+let backgroundImage = new Image();
+backgroundImage.src = './assets/images/placeholder-bg.png';
 
-// create canvas context
-// set canvas width / height
 // add background to canvas
 // scroll the canvas
 
@@ -43,13 +44,40 @@ function Cactus(x, y, width, height, color) {
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 }
+let enemyArray = []
+enemyArray[0] = {
+    x : game.width,
+    y : game.height
+}
 
 const gameLoop = () => {
     // loop theme music
     themeMusic.play();
     ctx.clearRect(0, 0, game.width, game.height);
+    ctx.fillStyle = '#000000'
     // requestAnimationFrame(gameLoop);
-    if (cactus.alive) cactus.render();
+    if (cactus.alive) {
+        cactus.render();
+
+        // render enemies at random
+        // scroll enemies across x axis
+        // for loop?
+        for (let i = 0; i < enemyArray.length; i++) {
+            enemy = new Enemy (enemyArray[i].x, 100, 32, 32, '#000000');
+            enemy.render();
+            enemyArray[i].x -= 2; // scroll left
+            if (enemyArray[i].x % 507 == 0) {
+                enemyArray.push({
+                    x: game.width + cactus.width,
+                    y: 100
+                })
+            }
+        }
+        // enemy = new Enemy(300, 250, 32, 32, '#000000');
+        // enemy.render();
+        // enemy.x--;
+        
+    }
     
 }
 
@@ -64,7 +92,7 @@ const keydownHandler = (e) => {
                 setTimeout(() => {
                     cactus.y += 40;
                     cactus.jumping = false; // set jumping back to false to jump again;
-                }, 500)
+                }, 600)
             } else {
                 console.log('no double jump');
             }
@@ -74,23 +102,25 @@ const keydownHandler = (e) => {
 // click to start game
 // event listener on game-message
 // create game message variable
-gameMessage = document.getElementById('game-message')
 document.addEventListener('DOMContentLoaded', () => {
-    game = document.getElementById('game-space') 
-    console.log(game);
+    
+    
     // configure the canvas
+    // create canvas context
+    // set canvas width / height
     game.setAttribute('width', 480);
     game.setAttribute('height', 320);
     ctx = game.getContext('2d');
-
-
+    
+    
+    gameMessage = document.getElementById('game-message')
     gameMessage.addEventListener('click', ()=> {
         gameMessage.textContent = 'Click Here to Stop';
         
         goCactus.play(); // play go cactus once
         // create cactus instance
         
-        cactus = new Cactus(60, 250, 32, 32, '#000000'); // y 'floor' is at 250 px
+        cactus = new Cactus(60, 250, 32, 32, 'darkgreen'); // y 'floor' is at 250px - cactus.y (32)
 
         // listen for keypress to jump
         document.addEventListener('keydown', keydownHandler);

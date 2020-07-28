@@ -248,44 +248,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // enemy = new Character(320, 100, 32, 32, '#000000');
 
-// x = 320;
+x = 320;
 // animate could take object as an arg? ? ?
 // enemy off the canvas stop the animation delete enemy. 
-// const animate = () => {
-//     xScrollRate = 4;
-//     let distance = Math.round(frameNo/50);
-//     console.log(distance);
-//     if (gameStarted) {
-//         requestAnimationFrame(animate);
-//         ctx.clearRect(0, 0, innerWidth, innerHeight);
-//         frameNo++; // increment frameNo
+const animate = () => {
+    xScrollRate = 4;
+    let distance = Math.round(frameNo/50);
+    console.log(distance);
+    if (gameStarted) {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, innerWidth, innerHeight);
+        frameNo++; // increment frameNo
 
-//         cactus.render(); 
-//         enemy = new Character(x, 100, 32, 32, '#000000', 320); // randomizer will go here
-//         // enemy.x -= xScrollRate;
-//         x -= xScrollRate; // move
-//         enemy.render();
+        cactus.render(); 
+        enemy = new Character(x, 100, 32, 32, '#000000', 320); // randomizer will go here
+        // enemy.x -= xScrollRate;
+        x -= xScrollRate; // move
+        enemy.render();
 
-//         // if (frameNo % 2 === 0 && enemy.x < -enemy.width){
+        // if (frameNo % 2 === 0 && enemy.x < -enemy.width){
 
-//         let randomVar = Math.floor(Math.random() * Math.floor(27));
-//         if (frameNo % randomVar === 0){
-//             // x = 320;
-//             nextEnemy = new Character(320, 100, 32, 32, '#000000');
-//             nextEnemy.x -= xScrollRate;
-//             nextEnemy.render();
-//         }
-//         // if (frameNo % Math.floor(Math.random() * Math.floor(10)))
+        let randomVar = Math.floor(Math.random() * Math.floor(27));
+        if (frameNo % randomVar === 0){
+            // x = 320;
+            nextEnemy = new Character(320, 100, 32, 32, '#000000');
+            nextEnemy.x -= xScrollRate;
+            nextEnemy.render();
+        }
+        // if (frameNo % Math.floor(Math.random() * Math.floor(10)))
 
-//         if (collisionCheck()) {
-//             console.log('collision');
-//             collisionSound.play();
-//             xScrollRate = 0;
-//             endGame();
+        if (collisionCheck()) {
+            console.log('collision');
+            collisionSound.play();
+            xScrollRate = 0;
+            endGame();
             
-//         };
-//     }
-// };
+        };
+    }
+};
             
             // const canvasGame = () => {
                 //     frameNo = 0;
