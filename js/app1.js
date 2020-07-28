@@ -65,21 +65,44 @@ const controller = {
 }
 
 const gameLoop = () => {
-    let cactus = new Cactus(100, 60, 32, 32, './assets/images/cactoos2.png', false)
-    if (controller.jump === true) {
-        cactus.y -= 40;
-        cactus.jumping = true;
-    } 
-
-    // dont let cactus fall thru the floor
-    if (cactus.y != 100) {
-        setTimeout(() => {
-            cactus.jumping = false;
-            cactus.y += 2;
-        }, 500)
+    // frames++;
+    console.log(frames);
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.drawImage(cactus, cactusX, cactusY);
+    // let randomNumber = -(Math.floor(Math.random() * Math.floor(50)))
+    // this spawns new enemies
+    for (let i = 0; i < enemyArray.length; i++) {
+        ctx.drawImage(enemy, enemyArray[i].x, 100);
+        enemyArray[i].x -= 3;
+        // this almost works!
+        if (enemyArray[i].x % 507 == 0) {
+            enemyArray.push({
+                x: canvas.width + cactus.width,
+                y: 100
+            })
+        }
+        console.log(enemyArray);
     }
-    cactus.onload(ctx.drawImage(cactus.src, 100, 60))
+    if (cactusY < 100 && cactusY >= 30) setTimeout(()=>{cactusY += gravity}, 1000);
+    
+     
 }
+// const gameLoop = () => {
+//     let cactus = new Cactus(100, 60, 32, 32, './assets/images/cactoos2.png', false)
+//     if (controller.jump === true) {
+//         cactus.y -= 40;
+//         cactus.jumping = true;
+//     } 
+
+//     // dont let cactus fall thru the floor
+//     if (cactus.y != 100) {
+//         setTimeout(() => {
+//             cactus.jumping = false;
+//             cactus.y += 2;
+//         }, 500)
+//     }
+//     cactus.onload(ctx.drawImage(cactus.src, 100, 60))
+// }
 
 document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', controller.keypressHandler);
@@ -107,6 +130,11 @@ document.addEventListener('DOMContentLoaded', () => {
 //         }
 //     };
 
+// let enemyArray = [];
+// enemyArray[0] = {
+//     x: canvas.width,
+//     y: canvas.height
+// }
 
 // const gameLoop = () => {
 //     // frames++;

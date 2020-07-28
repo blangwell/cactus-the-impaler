@@ -15,15 +15,87 @@ let xScrollRate;
 // everytime a column goes off screen, another should be loaded
 // array of objects, enemies, background, etc
 
-let cactus = {
-    x : 60,
-    y : 100,
-    width : 32,
-    height : 32,
-    src : './assets/images/cactoos2.png'
-}
 
+
+// class Character {
+//     constructor(x, y, height, width, color){
+//         this.x = x;
+//         this.y = y;
+//         this.height = height;
+//         this.width = width;
+//         this.color = color;
+//         this.alive = true;
+//         this.render = function () {
+//             ctx.fillStyle = this.color;
+//             ctx.fillRect(this.x, this.y, this.width, this.height)
+//             // // this.x = 320;
+//             // this.x = this.xStart;
+//             // this.x -= 4;
+//         }
+//         this.stopRender = function () {
+//             ctx.clearRect(this.x, this.y, this.width, this.height);
+//         }
+//     }
+// };
+
+
+// const animate = () => {
+    //     xScrollRate = 4;
+    //     let distance = Math.round(frameNo/50);
+    //     console.log(distance);
+    //     if (gameStarted) {
+        //         requestAnimationFrame(animate);
+//         ctx.clearRect(0, 0, innerWidth, innerHeight);
+//         frameNo++; // increment frameNo
+
+//         cactus.render(); 
+//         enemy = new Character(x, 100, 32, 32, '#000000', 320); // randomizer will go here
+//         // enemy.x -= xScrollRate;
+//         x -= xScrollRate; // move
+//         enemy.render();
+
+//         // if (frameNo % 2 === 0 && enemy.x < -enemy.width){
+    
+    //         let randomVar = Math.floor(Math.random() * Math.floor(27));
+    //         if (frameNo % randomVar === 0){
+        //             // x = 320;
+        //             nextEnemy = new Character(320, 100, 32, 32, '#000000');
+        //             nextEnemy.x -= xScrollRate;
+        //             nextEnemy.render();
+        //         }
+        //         // if (frameNo % Math.floor(Math.random() * Math.floor(10)))
+        
+        //         if (collisionCheck()) {
+            //             console.log('collision');
+            //             collisionSound.play();
+            //             xScrollRate = 0;
+            //             endGame();
+            
+            //         };
+            //     }
+            // };
 // gameLoop
+class Cactus {
+    constructor(x, y, width, height, src) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.src = src;
+    } 
+    render() {
+        console.log('render');
+    }
+}
+// let cactus = {
+//     x : 60,
+//     y : 100,
+//     width : 32,
+//     height : 32,
+//     src : './assets/images/cactoos2.png'
+// }
+cactus = new Cactus(60, 100, 32, 32, './assets/images/cactoos2.png')
+
 xScrollRate = 4;
 const simpleAnimate = (character) => {
     x = 320;
@@ -33,19 +105,16 @@ const simpleAnimate = (character) => {
     canvas.innerWidth = 480;
 
     if (gameStarted) {
-        // requestAnimationFrame(simpleAnimate);
+        requestAnimationFrame(simpleAnimate);
         ctx.clearRect(0, 0, innerWidth, innerHeight);
         frameNo++
-        console.log(frameNo);
+
+        // the drawImage call that couldn't do its fucking job. 
         cactus.src.onload = () => {
             ctx.drawImage(cactus.src, cactus.x, cactus.y, 32, 32);
         };
-        ctx.fillSyle = '#000000';
-        ctx.fillRect(cactus.x, cactus.y, 32, 32) 
-
-        
-        // character.render();
-        // keypressHandler();
+        ctx.fillStyle = 'darkgreen';
+        // ctx.fillRect(cactus.x, cactus.y, 32, 32) 
     }
 }
 
@@ -55,7 +124,6 @@ const keypressHandler = (e) => {
         case (13):
             if (!gameStarted) { // start the game  
                 playAgain()
-                simpleAnimate(enemy);
                 break;
             } else if (gameStarted && !jumping) { 
                 // cactus.y = 
@@ -68,22 +136,24 @@ const keypressHandler = (e) => {
         }
     };
     
-    const jump = () => {
-        jumping = true; // use jumping = true to prevent double jump
-        jumpSound.play(); 
-        cactus.y -= 40;
+const jump = () => {
+    jumping = true; // use jumping = true to prevent double jump
+    jumpSound.play(); 
+    cactus.y -= 40;
+};
+
+
+const gravityHandler = () => {
+    console.log('gravity');
+    setTimeout(() => { // cactus gravity!! 
+        while (cactus.y != 100) {
+            jumping = false;
+            cactus.y += 5
+        }}, 500);
+        return cactus.y;
     };
     
-    const gravityHandler = () => {
-        console.log('gravity');
-        setTimeout(() => { // cactus gravity!! 
-            while (cactus.y != 100) {
-                jumping = false;
-                cactus.y += 5
-            }}, 500);
-            return cactus.y;
-        };
-        
+
 const collisionCheck = () => {
     if (cactus.x + cactus.width > enemy.x && // will need to be refactored for enemy class
         cactus.x < enemy.x + enemy.width &&
@@ -104,6 +174,7 @@ const endGame = () => {
     
     
 };
+
 
 const playAgain = () => {
     frameNo = 0;
