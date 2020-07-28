@@ -9,7 +9,7 @@ let ctx;
 gameMessage = document.getElementById('game-message')
 document.addEventListener('DOMContentLoaded', () => {
     gameMessage.addEventListener('click', ()=> {
-        console.log('listened!')
+        gameMessage.textContent = 'Click Here to Stop';
         // start the game animation here
     })
 })
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // add background to canvas
 // scroll the canvas
 game = document.getElementById('game-space')
-console.log(canvas);
+console.log(game);
 game.setAttribute('width', 480);
 game.setAttribute('height', 320);
 ctx = game.getContext('2d');
@@ -37,6 +37,18 @@ function Enemy(x, y, width, height, color) {
     this.render = function () {
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+}
+
+function Cactus(x, y, width, height, color) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height; 
+    this.color = color;
+    this.render = function () {
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.s, this.y, this.width, this.height);
     }
 }
 
