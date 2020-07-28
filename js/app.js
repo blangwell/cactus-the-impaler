@@ -8,61 +8,12 @@ let canvas;
 let ctx;
 let enemy;
 let jumping = false; 
-let frameNo;
+let frameNo = 0;
 let x;
 let xScrollRate;
 
 // everytime a column goes off screen, another should be loaded
 // array of objects, enemies, background, etc
-
-// maybe we can draw all the enemies in advance
-// set their x positions to far off the canvas and scroll?
-// let cactusSprite = new Image();
-// cactusSprite.src = ('./assets/images/cactoos2.png');
-
-// function draw() {
-//     ctx.drawImage(background, 0, 0);
-//     ctx.drawImage(cactusSprite, x, y, width, height);
-//     ctx.drawImage(enemy, x, y, width, height);
-//     // array of obstacles
-//     enemyArray[0] = {
-//         x: canvas.width,
-//         y: 0
-//     };
-//     for (let i = 0; i< pipe.length; i++) {
-//         ctx.drawImage(enemy, enemyArray[i].x, enemyArray[i].y);
-//         enemyArray[i].x--;
-//         if (enemyArray[i].x == canvas.width - canvas.width/2){
-//             enemyArray.push(x: canvas.width, y: Math.floor(Math.random() * enemy.width) - enemy.x);
-//             }
-//     }
-
-
-// this should be enemy. have multiple enemies.
-// cactus should be an object, there is only one cactus.
-class Character {
-    constructor(x, y, height, width, color){
-        this.x = x;
-        this.y = y;
-        this.height = height;
-        this.width = width;
-        this.color = color;
-        this.alive = true;
-        this.render = function () {
-            ctx.fillStyle = this.color;
-            ctx.fillRect(this.x, this.y, this.width, this.height)
-            // // this.x = 320;
-            // this.x = this.xStart;
-            // this.x -= 4;
-        }
-        this.stopRender = function () {
-            ctx.clearRect(this.x, this.y, this.width, this.height);
-        }
-    }
-};
-
-// canvas = document.querySelector('canvas');
-// ctx = canvas.getContext('2d');
 
 let cactus = {
     x : 60,
@@ -71,27 +22,27 @@ let cactus = {
     height : 32,
     src : './assets/images/cactoos2.png'
 }
-enemy = new Character(320, 100, 32, 32, '#000000');
 
-
-
-
+// gameLoop
 xScrollRate = 4;
-
 const simpleAnimate = (character) => {
     x = 320;
     canvas = document.querySelector('canvas');
     ctx = canvas.getContext('2d');
     canvas.innerHeight = 320;
     canvas.innerWidth = 480;
+
     if (gameStarted) {
         // requestAnimationFrame(simpleAnimate);
         ctx.clearRect(0, 0, innerWidth, innerHeight);
         frameNo++
-        // cactus.x -= xScrollRate
+        console.log(frameNo);
         cactus.src.onload = () => {
             ctx.drawImage(cactus.src, cactus.x, cactus.y, 32, 32);
         };
+        ctx.fillSyle = '#000000';
+        ctx.fillRect(cactus.x, cactus.y, 32, 32) 
+
         
         // character.render();
         // keypressHandler();
@@ -170,10 +121,59 @@ document.addEventListener('DOMContentLoaded', () => {
     
     gameMessage = document.querySelector('#game-message');
     gameStarted = false;
-    document.addEventListener('keydown', keypressHandler);
+    document.addEventListener('keydown', keypressHandler); // this runs the keypressHandler separate from gameLoop 
     let runGame = setInterval(simpleAnimate, 60)
 });
 
+
+
+// maybe we can draw all the enemies in advance
+// set their x positions to far off the canvas and scroll?
+// let cactusSprite = new Image();
+// cactusSprite.src = ('./assets/images/cactoos2.png');
+
+// function draw() {
+//     ctx.drawImage(background, 0, 0);
+//     ctx.drawImage(cactusSprite, x, y, width, height);
+//     ctx.drawImage(enemy, x, y, width, height);
+//     // array of obstacles
+//     enemyArray[0] = {
+//         x: canvas.width,
+//         y: 0
+//     };
+//     for (let i = 0; i< pipe.length; i++) {
+//         ctx.drawImage(enemy, enemyArray[i].x, enemyArray[i].y);
+//         enemyArray[i].x--;
+//         if (enemyArray[i].x == canvas.width - canvas.width/2){
+//             enemyArray.push(x: canvas.width, y: Math.floor(Math.random() * enemy.width) - enemy.x);
+//             }
+//     }
+
+
+// this should be enemy. have multiple enemies.
+// // cactus should be an object, there is only one cactus.
+// class Character {
+//     constructor(x, y, height, width, color){
+//         this.x = x;
+//         this.y = y;
+//         this.height = height;
+//         this.width = width;
+//         this.color = color;
+//         this.alive = true;
+//         this.render = function () {
+//             ctx.fillStyle = this.color;
+//             ctx.fillRect(this.x, this.y, this.width, this.height)
+//             // // this.x = 320;
+//             // this.x = this.xStart;
+//             // this.x -= 4;
+//         }
+//         this.stopRender = function () {
+//             ctx.clearRect(this.x, this.y, this.width, this.height);
+//         }
+//     }
+// };
+
+// enemy = new Character(320, 100, 32, 32, '#000000');
 
 // x = 320;
 // animate could take object as an arg? ? ?
