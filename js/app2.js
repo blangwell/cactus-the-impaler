@@ -2,18 +2,15 @@
 let game;
 let gameMessage;
 let ctx;
+const themeMusic = new Audio('./assets/sounds/three-red-hearts-quiet.wav');
+const goCactus = new Audio('./assets/sounds/go-cactus.wav');
 const jumpSound = new Audio('./assets/sounds/jump.wav');
-
 
 // create canvas context
 // set canvas width / height
 // add background to canvas
 // scroll the canvas
-game = document.getElementById('game-space')
-console.log(game);
-game.setAttribute('width', 480);
-game.setAttribute('height', 320);
-ctx = game.getContext('2d');
+
 
 
 // enemies created and scrolled
@@ -39,30 +36,25 @@ function Cactus(x, y, width, height, color) {
     this.width = width;
     this.height = height; 
     this.color = color;
+    this.alive = true;
     this.jumping = false;
     this.render = function () {
         ctx.fillStyle = this.color;
-        ctx.fillRect(this.s, this.y, this.width, this.height);
+        ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 }
 
-// click to start game
-// event listener on game-message
-// create game message variable
-gameMessage = document.getElementById('game-message')
-document.addEventListener('DOMContentLoaded', () => {
-    gameMessage.addEventListener('click', ()=> {
-        gameMessage.textContent = 'Click Here to Stop';
-
-        // create cactus instance
-        cactus = new Cactus(60, 100, 32, 32, 'darkgreen')
-        // listen for keypress to jump
-        document.addEventListener('keydown', keypressHandler)
-    })
-})
+const gameLoop = () => {
+    // loop theme music
+    themeMusic.play();
+    ctx.clearRect(0, 0, game.width, game.height);
+    // requestAnimationFrame(gameLoop);
+    if (cactus.alive) cactus.render();
+    
+}
 
 // add keys inputs to create player jumps
-const keypressHandler = (e) => {
+const keydownHandler = (e) => {
     switch(e.keyCode) {
         case (87): // w key
             if (!cactus.jumping) { // if cactus isn't jumping
@@ -78,5 +70,33 @@ const keypressHandler = (e) => {
             }
     }
 };
+
+// click to start game
+// event listener on game-message
+// create game message variable
+gameMessage = document.getElementById('game-message')
+document.addEventListener('DOMContentLoaded', () => {
+    game = document.getElementById('game-space') 
+    console.log(game);
+    // configure the canvas
+    game.setAttribute('width', 480);
+    game.setAttribute('height', 320);
+    ctx = game.getContext('2d');
+
+
+    gameMessage.addEventListener('click', ()=> {
+        gameMessage.textContent = 'Click Here to Stop';
+        
+        goCactus.play(); // play go cactus once
+        // create cactus instance
+        
+        cactus = new Cactus(60, 250, 32, 32, '#000000'); // y 'floor' is at 250 px
+
+        // listen for keypress to jump
+        document.addEventListener('keydown', keydownHandler);
+        let runGame = setInterval(gameLoop, 60);
+    })
+})
+
 
 
