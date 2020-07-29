@@ -4,7 +4,7 @@ A pascifistic infinite runner where you play as the fiercest warrior time has ev
 ## Technology
 For this game I utilized HTML5 Canvas, CSS, and Vanilla Javascript. My goal was to attain a minimum viable product by 7/29/20. Minimum viable product in this case was: obstacles scroll towards player, player jumps over obstacles, if player collides with an obstacle a game over state is triggered. In this readme, I will put my failures on display both for posterity and to help anyone who may be in a similar position as the one I found myself while building this game.
 
-### Attempt 1 
+## Attempt 1 
 I started by creating the scrolling motion with the `animate()` function and testing with rectangles. `xVelocity` tracks how much to increment the speed of the scroll. 
 ```js
 let x = 320;
@@ -97,16 +97,43 @@ const animate = () => {
     }
 };
 ```
-It is around this point I sought counsel with my instructors. _Special thanks to @romebell and @ahonore42 for their gentle guidance in reapproaching and refactoring this project; and a thank you to @TaylorDarneille for moral support when the imposter syndrome hit_
+It is around this point I sought counsel with my instructors. _Special thanks to @romebell and @ahonore42 for their gentle guidance in reapproaching and refactoring this project and a thank you to @TaylorDarneille for moral support when the imposter syndrome hit_
 
-### Attempt 2
-At this point I pseudocoded out the entire project. The steps were as follows:
+## Attempt 2
+At this point I pseudocoded out the entire project again with new perspective. The general steps were as follows:
 - Click to start game
-- Make one scroll left across the canvas
+- Make one enemy scroll left across the canvas
 - Randomly generate new enemies to scroll across the canvas
 - Make player jump on keypress
 - Detect player collisions with enemies
+- End game if collision detected
 - Style as needed
+I set up a `DOMContentLoaded` event listener, set the canvas size properly, and created the `ctx` variable
+```js
+let game = document.getElementById('game-space') ;
+document.addEventListener('DOMContentLoaded', () => {
+    // configure the canvas
+    // create canvas context
+    // set canvas width / height
+    game.setAttribute('width', 480);
+    game.setAttribute('height', 320);
+    ctx = game.getContext('2d');
+```
+Next up it was time to make an enemy scroll across the screen. I used the naming convention `gameLoop()` as it seemed to most descriptive to me. 
+```js
+const gameLoop = () => {
+    // CLEAR SCREEN AND ANIMATE EACH FRAME
+    ctx.clearRect(0, 0, game.width, game.height);
+    requestAnimationFrame(gameLoop);
+```
+Since there was ultimately going to be multiple enemies spawned, I created the `Enemy` class constructor (identical to the class above in Attempt 1 with the new name). At this point, it was time to find a better way to scroll separate instances of the `Enemy` class across the canvas.
+This is where the Duck Duck Go-fu really came in handy. One method I found from a similar infinite runner game, used an array of obstacles and looped through them. Sounded like a plan to me. Above the scope of the `gameLoop` I added
+```js
+let enemyArray = [];
+enemyArray[0] = new Enemy(480, 270, 32, 32, '#000000')
+```
 
-# Added Feature Branch!
+```js
+```
+### Added Feature Branch!
 
