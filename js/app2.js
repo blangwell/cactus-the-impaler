@@ -56,6 +56,9 @@ const gameLoop = () => {
     if (cactus.alive) {
         themeMusic.play();
         cactus.render();
+        let min = 100;
+        let max = 200;
+        let random = Math.floor(Math.random() * (+max + 1 - +min)) + +min; 
         
         // scroll enemies across x axis
         for (let i = 0; i < enemyArray.length; i++) {
@@ -65,17 +68,16 @@ const gameLoop = () => {
             eachEnemy.x -= 4; // scroll left
             
             // create a random number
-            // CLEAN THIS UP!
-            let min = 1000;
-            let max = 5000;
-            let random = Math.floor(Math.random() * (max + 1 - min)) + min;
-            // console.log(random);
-            if (eachEnemy.x === 100){
+            console.log(random);
+            if (eachEnemy.x === random){
                 // render enemies at random
-                setTimeout(() => {
-                    enemyArray.push(new Enemy(480, 250, 32, 32, '#000000'))
-                    , random}) // this won't spit things out at random
-            }
+                enemyArray.push(new Enemy(480, 250, 32, 32, '#000000'))
+                // setTimeout(() => {
+                //     , random}) // this won't spit things out at random
+            } else if (eachEnemy.x === 0){
+                enemyArray.push(new Enemy(480, 250, 32, 32, '#000000'))
+            }            // randomEnemy(eachEnemy.x);
+
             // this removes enemies from enemiesArray once they have fully left the screen
             if (eachEnemy.x < -eachEnemy.width) {
                 enemyArray.shift();
@@ -88,6 +90,19 @@ const gameLoop = () => {
     } // else condition here could make code cleaner
     
 };
+
+// const randomEnemy = (eachEnemyX) => {
+//     let min = 100;
+//     let max = 400;
+//     let random = Math.floor(Math.random() * (+max + 1 - +min)) + +min; 
+//     console.log(random);
+//     if (eachEnemyX === random){
+//         enemyArray.push(new Enemy(480, 250, 32, 32, '#000000'))
+//         // render enemies at random
+//         // setTimeout(() => {
+//             // , random})
+//     }
+// }
 
 const collisionCheck = (cactus, currentEnemy) => {
     if (cactus.x + cactus.width > currentEnemy.x && // will need to be refactored for enemy class
@@ -143,13 +158,10 @@ document.addEventListener('DOMContentLoaded', () => {
     startStop.addEventListener('click', ()=> {
         if (!gameStarted) {
             gameStarted = true;
-            secretMessage.style.diplay = 'none';
             cactus = new Cactus(60, 250, 32, 32, 'darkgreen'); // y 'floor' is at 250px - cactus.y (32)
-            cactus.alive = true;
             startStop.textContent = 'Click Here to Restart';
             goCactus.play(); 
-            
-            // create cactus instance
+
             // listen for keypress to jump
             document.addEventListener('keydown', keydownHandler);
             gameLoop();
