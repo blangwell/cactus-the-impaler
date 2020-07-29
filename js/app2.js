@@ -33,44 +33,52 @@ function Enemy(x, y, width, height, color) {
 }
 
 // player constructor
-function Cactus(x, y, width, height, color) {
+function Cactus(x, y, width, height, color, src) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height; 
     this.color = color;
+    this.src = src
     this.alive = true;
     this.jumping = false;
     this.render = function () {
+        // let cactusSprite = new Image();
+        // cactusSprite.onload = function () {
+        //     ctx.drawImage(cactusSprite, this.x, this.y)
+        // }
+        // cactusSprite.src = this.src; 
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
+        // ctx.drawImage(cactusSpriteSrc, this.x, this.y, this.width, this.height)
+        
     }
 }
 
 let enemyArray = [];
 enemyArray[0] = new Enemy(480, 250, 32, 32, '#000000')
 
+let min = 100;
+let max = 300;
 
 const gameLoop = () => {
-     // clears screen each frame and requests animationframe from self
-     ctx.clearRect(0, 0, game.width, game.height);
-     requestAnimationFrame(gameLoop);
-     if (cactus.alive) {
+    // clears screen each frame and requests animationframe from self
+    ctx.clearRect(0, 0, game.width, game.height);
+    requestAnimationFrame(gameLoop);
+    if (cactus.alive) {
         frameNo++; // increment frameNo;
-
+        
         // track and display score 
         score = Math.round(frameNo / 10); // divide frames by 10 for score
         ctx.font = '15px Arial';
         ctx.fillText(`Score: ${score}`, 10, 20, 200)
-
-        themeMusic.play();
+        cactus
         cactus.render();
-
+        
+        themeMusic.play();
         // create a random number each iteration
-        let min = 100;
-        let max = 300;
         let random = Math.floor(Math.random() * (+max + 1 - +min)) + +min;
-         
+        
         // scroll enemies across x axis
         for (let i = 0; i < enemyArray.length; i++) {
             let eachEnemy = enemyArray[i];
@@ -81,7 +89,7 @@ const gameLoop = () => {
             if (eachEnemy.x === random) {
                 enemyArray.push(new Enemy(480, 250, 32, 32, '#000000'))
                
-            } else if (eachEnemy.x === 0) { // in case enemy gets to 0 with no new enemies
+            } else if (eachEnemy.x === 0 && enemyArray.length < 3) { // in case enemy gets to 0 with no new enemies
                 enemyArray.push(new Enemy(480, 250, 32, 32, '#000000'))
             }            // randomEnemy(eachEnemy.x);
 
@@ -161,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
     startStop.addEventListener('click', ()=> {
         if (!gameStarted) {
             gameStarted = true;
-            cactus = new Cactus(60, 250, 32, 32, 'darkgreen'); // y 'floor' is at 250px - cactus.y (32)
+            cactus = new Cactus(60, 250, 32, 32, 'darkgreen', './assets/images/cactoos2.png'); // y 'floor' is at 250px - cactus.y (32)
             startStop.textContent = 'Click Here to Restart';
             goCactus.play(); 
 
