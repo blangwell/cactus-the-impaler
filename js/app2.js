@@ -26,9 +26,12 @@ function Enemy(x, y, width, height, color) {
     this.height = height;
     this.color = color;
     this.alive = true;
-    this.render = function () {
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+    this.render = function (eachEnemy) {
+        let enemy = new Image();
+        enemy.src = './assets/images/wizard.png'
+        ctx.drawImage(enemy, eachEnemy.x, eachEnemy.y, this.width, this.height);
+        // ctx.fillStyle = this.color;
+        // ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 }
 
@@ -56,7 +59,7 @@ function Cactus(x, y, width, height, color, src) {
 }
 
 let enemyArray = [];
-enemyArray[0] = new Enemy(480, 270, 32, 32, '#000000')
+enemyArray[0] = new Enemy(480, 260, 48, 48)
 
 let min = 100;
 let max = 300;
@@ -91,15 +94,15 @@ const gameLoop = () => {
         // GENERATE AND SCROLL ENEMIES
         for (let i = 0; i < enemyArray.length; i++) {
             let eachEnemy = enemyArray[i];
-            eachEnemy.render();
+            eachEnemy.render(eachEnemy);
             eachEnemy.x -= 4; // scroll left
             
             // render enemies at random
             if (eachEnemy.x === random) {
-                enemyArray.push(new Enemy(480, 270, 32, 32, '#000000'))
+                enemyArray.push(new Enemy(480, 260, 48, 48))
                
             } else if (eachEnemy.x === 0 && enemyArray.length < 4) { // in case enemy gets to 0 with no new enemies
-                enemyArray.push(new Enemy(480, 270, 32, 32, '#000000'))
+                enemyArray.push(new Enemy(480, 260, 48, 48))
             }            // randomEnemy(eachEnemy.x);
 
             // this removes enemies from enemiesArray once they have fully left the screen
