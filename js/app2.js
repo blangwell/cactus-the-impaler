@@ -73,7 +73,8 @@ const gameLoop = () => {
         ctx.font = '15px Arial';
         ctx.fillText(`Score: ${score}`, 10, 20, 200)
         cactus
-        cactus.render();
+        // cactus.render();
+        ctx.drawImage(cactusImage, cactus.x, cactus.y);
         
         themeMusic.play();
         // create a random number each iteration
@@ -157,7 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
     game.setAttribute('width', 480);
     game.setAttribute('height', 320);
     ctx = game.getContext('2d');
-    
+    cactusImage = new Image()
+    cactusImage.src = './assets/images/cactoos2.png' 
     
     startStop = document.querySelector('#start-stop');
     startStop.addEventListener('click', ()=> {
