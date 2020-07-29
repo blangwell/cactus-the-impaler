@@ -51,20 +51,17 @@ enemyArray[0] = new Enemy(480, 250, 32, 32, '#000000')
 
 
 const gameLoop = () => {
-
-    // loop theme music
-    themeMusic.play();
+    themeMusic.play(); // loops continuously
     ctx.clearRect(0, 0, game.width, game.height);
     requestAnimationFrame(gameLoop);
     if (cactus.alive) {
         cactus.render();
-        // enemy = new Enemy(480, 250, 32, 32, '#000000');
-        // enemy.render();
+        
         // render enemies at random
         // scroll enemies across x axis
         for (let i = 0; i < enemyArray.length; i++) {
             let eachEnemy = enemyArray[i];
-            console.log(eachEnemy);
+            // console.log(eachEnemy);
             eachEnemy.render();
             eachEnemy.x -= 4; // scroll left
             
@@ -72,7 +69,7 @@ const gameLoop = () => {
             let min = 5000;
             let max = 10000;
             let random = Math.floor(Math.random() * (max + 1 - min)) + min;
-            console.log(random);
+            // console.log(random);
             let randomNum = Math.floor(Math.random() * Math.floor())
             if (eachEnemy.x === 100){
                 setTimeout(() => {
@@ -80,7 +77,13 @@ const gameLoop = () => {
                     , random}) // this won't spit things out at random
             }
             collisionCheck(cactus, eachEnemy);
+            // gotta slice out old enemies to improve performance
+            if (eachEnemy.x < -eachEnemy.width) {
+                enemyArray.shift();
+                // console.log(enemyArray);
+            }
         }
+        console.log(enemyArray.length);
     } // end if (cactus.alive)
     
 }
