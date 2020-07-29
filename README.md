@@ -97,7 +97,7 @@ const animate = () => {
     }
 };
 ```
-It is around this point I sought counsel with my instructors. _Special thanks to @romebell and @ahonore42 for their gentle guidance in reapproaching and refactoring this project and a thank you to @TaylorDarneille for moral support when the imposter syndrome hit_
+It is around this point I sought counsel with my instructors. _Special thanks to @romebell, @ahonore42, and @petefitton for their gentle guidance in reapproaching and refactoring this project; and a big thank you to @TaylorDarneille for moral support when the imposter syndrome hit_
 
 ## Attempt 2
 At this point I pseudocoded out the entire project again with new perspective. The general steps were as follows:
@@ -132,8 +132,60 @@ This is where the Duck Duck Go-fu really came in handy. One method I found from 
 let enemyArray = [];
 enemyArray[0] = new Enemy(480, 270, 32, 32, '#000000')
 ```
-
+Next I created a for loop to iterate over `enemyArray`. Seeing as how there was only one item in the array, I would need to push new instances of the `Enemy` class into `enemyArray` so that the iterative process could continue for the length of the game. I did this randomly by defining a variable `random` to generate a random number between 100 and 300
 ```js
+let min = 100;
+let max = 300;
+let random = Math.floor(Math.random() * (+max + 1 - +min)) + +min;
+for (let i = 0; i < enemyArray.length; i++) {
+    let eachEnemy = enemyArray[i];
+    eachEnemy.render();
+    eachEnemy.x -= 4; // scroll each enemy left left
+    
+    // render enemies at random
+    if (eachEnemy.x === random) {
+        enemyArray.push(new Enemy(480, 270, 32, 32, '#000000'))
+    }
+```
+This worked! It was wonderful. Fantastic. I was done now, right? Not so fast! Upon testing the game a few times, two big problems became apparent.
+
+The first problem was that, during some iterations, enemies would hardly spawn at all. The game canvas would be empty for ten to twenty seconds at a time. I added a piece of logic to generate a new enemy if one enemy scrolled off screen while there were less than four enemies in the enemy array.
+```js
+    // in case enemy gets to 0 with no new enemies
+    } else if (eachEnemy.x === 0 && enemyArray.length < 4) { 
+        enemyArray.push(new Enemy(480, 270, 32, 32, '#000000'))
+    }           
+```
+Which leads to the second problem. After running the game for about 75 seconds, I tried to close the browser window and it wouldn't respond. It was doing so much work keeping track of `enemyArray` objects that were off screen, It was crashing the browser. I got around this by calling `enemyArray.shift()` once an enemy left the screen. This removes the first item from an array and _shifts_ the other items left. I officially had garbage collection logic. 
+```js
+// this removes enemies from enemiesArray once they have fully left the screen
+    if (eachEnemy.x < -eachEnemy.width) {
+        enemyArray.shift();
+    }
+```
+I refreshed the page and got a surge of dopamine. The game was running great and enemies were being generated randomly! Next up was to get CACTUS on the screen and make them jump! 
+```js
+function Cactus(x, y, width, height, color, src) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height; 
+    this.color = color;
+    this.src = src
+    this.alive = true;
+    this.jumping = false;
+    this.render = function () {
+        // let cactusSprite = new Image();
+        // cactusSprite.onload = function () {
+        //     ctx.drawImage(cactusSprite, this.x, this.y)
+        // }
+        // cactusSprite.src = this.src; 
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+        // ctx.drawImage(cactusSpriteSrc, this.x, this.y, this.width, this.height)
+        
+    }
+}
 ```
 ### Added Feature Branch!
 
