@@ -5,6 +5,8 @@ let ctx;
 const themeMusic = new Audio('./assets/sounds/three-red-hearts-quiet.wav');
 const goCactus = new Audio('./assets/sounds/go-cactus.wav');
 const jumpSound = new Audio('./assets/sounds/jump.wav');
+const collisionSound = new Audio('./assets/sounds/explode.wav')
+
 // add background image source
 let backgroundImage = new Image();
 backgroundImage.src = './assets/images/placeholder-bg.png';
@@ -67,22 +69,33 @@ const gameLoop = () => {
             eachEnemy.x -= 4; // scroll left
             
             // create a random number
-            console.log(enemyArray[i].x);
-
-            // look into set interval / timeout
             let min = 5000;
             let max = 10000;
             let random = Math.floor(Math.random() * (max + 1 - min)) + min;
             console.log(random);
-            // let randomNum = Math.floor(Math.random() * Math.floor())
-            if (eachEnemy.x === 300){
+            let randomNum = Math.floor(Math.random() * Math.floor())
+            if (eachEnemy.x === 100){
                 setTimeout(() => {
                     enemyArray.push(new Enemy(480, 250, 32, 32, '#000000'))
                     , random}) // this won't spit things out at random
             }
+            collisionCheck(cactus, eachEnemy);
         }
     } // end if (cactus.alive)
     
+}
+
+const collisionCheck = (cactus, currentEnemy) => {
+    if (cactus.x + cactus.width > currentEnemy.x && // will need to be refactored for enemy class
+        cactus.x < currentEnemy.x + currentEnemy.width &&
+        cactus.y + cactus.height > currentEnemy.y &&
+        cactus.y < currentEnemy.y + currentEnemy.height) {
+            // console.log('collision detected successfully!');
+            // enemy.stopRender();
+            console.log('collision!')
+            collisionSound.play();
+            return true;
+        }
 }
 
 // add keys inputs to create player jumps
