@@ -78,7 +78,7 @@ const gameLoop = () => {
         
         // DRAW SCORE
         score = Math.round(frameNo / 10); // divide frames by 10 for score
-        ctx.font = 'bold 15px Courier';
+        ctx.font = '15px Courier New';
         ctx.fillStyle = 'white';
         ctx.fillText(`Score: ${score}`, game.width - 100, 305, 200)
         
@@ -117,9 +117,9 @@ const gameLoop = () => {
 };
 
 const collisionCheck = (cactus, currentEnemy) => {
-    if (cactus.x + cactus.width > currentEnemy.x && // will need to be refactored for enemy class
-        cactus.x < currentEnemy.x + currentEnemy.width &&
-        cactus.y + cactus.height > currentEnemy.y &&
+    if ((cactus.x + cactus.width - 20) > currentEnemy.x && // -20 to offset for transparent portion of png
+        cactus.x < currentEnemy.x + currentEnemy.width + 20 &&
+        (cactus.y + cactus.height - 10) > currentEnemy.y &&
         cactus.y < currentEnemy.y + currentEnemy.height) {
             console.log('collision!')
             collisionSound.play();
@@ -144,11 +144,11 @@ const keydownHandler = (e) => {
         case (87): // w key
             if (!cactus.jumping) { // if cactus isn't jumping
                 cactus.jumping = true; // set jumping to true, as he jumps
-                cactus.y -= 60; // move cactus up 40 px
+                cactus.y -= 50; // move cactus up 40 px
                 cactusImage.src = './assets/images/cactoos_jump.png'
                 jumpSound.play();
                 setTimeout(() => {
-                    cactus.y += 60;
+                    cactus.y += 50;
                     cactus.jumping = false;
                     cactusImage.src = './assets/images/cactoos2.png' // set jumping back to false to jump again;
                 }, 600)
