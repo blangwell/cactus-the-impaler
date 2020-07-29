@@ -24,16 +24,22 @@ footer {
     align-items: center;
     border: 10px solid black;
     margin: 0px auto; /* this centers the flex container */
-    
 }
-#game-message {
+#secret-message {
+    position: relative;
+    text-align: center;
+    top: -175px;
+    display: none;
+}
+
+#start-stop {
     margin: 20px 0;
     font-size: 14px;
     border: 2px solid black;
     padding: 5px;
 }
 
-#game-message:hover {
+#start-stop:hover {
     cursor: pointer;
 }
 

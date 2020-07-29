@@ -1,6 +1,6 @@
 // start from scratch - lets GO
 let game = document.getElementById('game-space') ;
-let gameMessage;
+let startStop;
 let ctx;
 const themeMusic = new Audio('./assets/sounds/three-red-hearts-quiet.wav');
 const goCactus = new Audio('./assets/sounds/go-cactus.wav');
@@ -51,10 +51,11 @@ enemyArray[0] = new Enemy(480, 250, 32, 32, '#000000')
 
 
 const gameLoop = () => {
-    themeMusic.play(); // loops continuously
+     // clears screen each frame and requests animationframe from self
     ctx.clearRect(0, 0, game.width, game.height);
     requestAnimationFrame(gameLoop);
     if (cactus.alive) {
+        themeMusic.play();
         cactus.render();
         
         // render enemies at random
@@ -70,18 +71,20 @@ const gameLoop = () => {
             let max = 10000;
             let random = Math.floor(Math.random() * (max + 1 - min)) + min;
             // console.log(random);
-            let randomNum = Math.floor(Math.random() * Math.floor())
             if (eachEnemy.x === 100){
                 setTimeout(() => {
                     enemyArray.push(new Enemy(480, 250, 32, 32, '#000000'))
                     , random}) // this won't spit things out at random
             }
-            collisionCheck(cactus, eachEnemy);
-            // gotta slice out old enemies to improve performance
+            // this removes enemies from enemiesArray once they have fully left the screen
             if (eachEnemy.x < -eachEnemy.width) {
                 enemyArray.shift();
                 // console.log(enemyArray);
             }
+            if (collisionCheck(cactus, eachEnemy)) {
+                endGame();
+            }
+            // gotta slice out old enemies to improve performance
         }
         console.log(enemyArray.length);
     } // end if (cactus.alive)
@@ -93,12 +96,17 @@ const collisionCheck = (cactus, currentEnemy) => {
         cactus.x < currentEnemy.x + currentEnemy.width &&
         cactus.y + cactus.height > currentEnemy.y &&
         cactus.y < currentEnemy.y + currentEnemy.height) {
-            // console.log('collision detected successfully!');
-            // enemy.stopRender();
             console.log('collision!')
             collisionSound.play();
             return true;
         }
+}
+
+const endGame = () => {
+    cactus.alive = false; // setting cactus to not alive stops rendering everything on screen.
+    themeMusic.pause();
+    themeMusic.currentTime = 0;
+    startStop.innerText = 'Click to Start'
 }
 
 // add keys inputs to create player jumps
@@ -133,9 +141,9 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx = game.getContext('2d');
     
     
-    gameMessage = document.getElementById('game-message')
-    gameMessage.addEventListener('click', ()=> {
-        gameMessage.textContent = 'Click Here to Stop';
+    startStop = document.getElementById('game-message')
+    startStop.addEventListener('click', ()=> {
+        startStop.textContent = 'Click Here to Stop';
         
         goCactus.play(); // play go cactus once
         // create cactus instance
@@ -144,7 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // listen for keypress to jump
         document.addEventListener('keydown', keydownHandler);
-        // let runGame = setInterval(gameLoop, 60);
         gameLoop();
     })
 })
