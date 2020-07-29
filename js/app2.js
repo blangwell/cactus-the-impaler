@@ -74,7 +74,7 @@ const gameLoop = () => {
         ctx.fillText(`Score: ${score}`, 10, 20, 200)
         cactus
         // cactus.render();
-        ctx.drawImage(cactusImage, cactus.x, cactus.y);
+        ctx.drawImage(cactusImage, cactus.x, cactus.y, cactus.width, cactus.height);
         
         themeMusic.play();
         // create a random number each iteration
@@ -137,10 +137,12 @@ const keydownHandler = (e) => {
             if (!cactus.jumping) { // if cactus isn't jumping
                 cactus.jumping = true; // set jumping to true, as he jumps
                 cactus.y -= 40; // move cactus up 40 px
+                cactusImage.src = './assets/images/cactoos_jump.png'
                 jumpSound.play();
                 setTimeout(() => {
                     cactus.y += 40;
-                    cactus.jumping = false; // set jumping back to false to jump again;
+                    cactus.jumping = false;
+                    cactusImage.src = './assets/images/cactoos2.png' // set jumping back to false to jump again;
                 }, 600)
             } else {
                 console.log('no double jump');
