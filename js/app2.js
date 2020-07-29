@@ -56,7 +56,7 @@ function Cactus(x, y, width, height, color, src) {
 }
 
 let enemyArray = [];
-enemyArray[0] = new Enemy(480, 250, 32, 32, '#000000')
+enemyArray[0] = new Enemy(480, 270, 32, 32, '#000000')
 
 let min = 100;
 let max = 300;
@@ -70,6 +70,7 @@ const gameLoop = () => {
         frameNo++; // increment frameNo;        
         
         // DRAW AND SCROLL BACKGROUND  
+        ctx.imageSmoothingEnabled = false;
         ctx.drawImage(bgImage, bgX, 0, game.width, game.height); // this works!
         ctx.drawImage(bgImage, bgX + game.width, 0, game.width, game.height); // this works!
         bgX -= scrollSpeed;
@@ -79,7 +80,7 @@ const gameLoop = () => {
         score = Math.round(frameNo / 10); // divide frames by 10 for score
         ctx.font = 'bold 15px Courier';
         ctx.fillStyle = 'white';
-        ctx.fillText(`Score: ${score}`, 10, 305, 200)
+        ctx.fillText(`Score: ${score}`, game.width - 100, 305, 200)
         
         // DRAW CACTUS
         ctx.drawImage(cactusImage, cactus.x, cactus.y, cactus.width, cactus.height);
@@ -95,10 +96,10 @@ const gameLoop = () => {
             
             // render enemies at random
             if (eachEnemy.x === random) {
-                enemyArray.push(new Enemy(480, 250, 32, 32, '#000000'))
+                enemyArray.push(new Enemy(480, 270, 32, 32, '#000000'))
                
             } else if (eachEnemy.x === 0 && enemyArray.length < 4) { // in case enemy gets to 0 with no new enemies
-                enemyArray.push(new Enemy(480, 250, 32, 32, '#000000'))
+                enemyArray.push(new Enemy(480, 270, 32, 32, '#000000'))
             }            // randomEnemy(eachEnemy.x);
 
             // this removes enemies from enemiesArray once they have fully left the screen
@@ -143,11 +144,11 @@ const keydownHandler = (e) => {
         case (87): // w key
             if (!cactus.jumping) { // if cactus isn't jumping
                 cactus.jumping = true; // set jumping to true, as he jumps
-                cactus.y -= 40; // move cactus up 40 px
+                cactus.y -= 60; // move cactus up 40 px
                 cactusImage.src = './assets/images/cactoos_jump.png'
                 jumpSound.play();
                 setTimeout(() => {
-                    cactus.y += 40;
+                    cactus.y += 60;
                     cactus.jumping = false;
                     cactusImage.src = './assets/images/cactoos2.png' // set jumping back to false to jump again;
                 }, 600)
@@ -176,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
     startStop.addEventListener('click', ()=> {
         if (!gameStarted) {
             gameStarted = true;
-            cactus = new Cactus(60, 250, 32, 32, 'darkgreen', './assets/images/cactoos2.png'); // y 'floor' is at 250px - cactus.y (32)
+            cactus = new Cactus(60, 240, 64, 64, 'darkgreen', './assets/images/cactoos2.png'); // y 'floor' is at 250px - cactus.y (32)
             startStop.textContent = 'Click Here to Reset';
             goCactus.play(); 
 
