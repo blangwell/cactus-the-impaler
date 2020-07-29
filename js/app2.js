@@ -1,5 +1,6 @@
 // start from scratch - lets GO
 let game = document.getElementById('game-space') ;
+let secretMessage = document.getElementById('secret-message')
 let startStop;
 let ctx;
 const themeMusic = new Audio('./assets/sounds/three-red-hearts-quiet.wav');
@@ -7,14 +8,10 @@ const goCactus = new Audio('./assets/sounds/go-cactus.wav');
 const jumpSound = new Audio('./assets/sounds/jump.wav');
 const collisionSound = new Audio('./assets/sounds/explode.wav')
 
-// add background image source
-let backgroundImage = new Image();
-backgroundImage.src = './assets/images/placeholder-bg.png';
 
-// add background to canvas
-// scroll the canvas
-
-
+// TODO Click to try again logic
+// TODO Fix randomization
+// TODO Add sprites
 
 // enemies created and scrolled
 // enemies should have an x, y, width, height, color)
@@ -58,7 +55,7 @@ const gameLoop = () => {
         themeMusic.play();
         cactus.render();
         
-        // render enemies at random
+        
         // scroll enemies across x axis
         for (let i = 0; i < enemyArray.length; i++) {
             let eachEnemy = enemyArray[i];
@@ -67,11 +64,12 @@ const gameLoop = () => {
             eachEnemy.x -= 4; // scroll left
             
             // create a random number
-            let min = 5000;
-            let max = 10000;
+            let min = 1000;
+            let max = 50000;
             let random = Math.floor(Math.random() * (max + 1 - min)) + min;
             // console.log(random);
             if (eachEnemy.x === 100){
+                // render enemies at random
                 setTimeout(() => {
                     enemyArray.push(new Enemy(480, 250, 32, 32, '#000000'))
                     , random}) // this won't spit things out at random
@@ -79,15 +77,13 @@ const gameLoop = () => {
             // this removes enemies from enemiesArray once they have fully left the screen
             if (eachEnemy.x < -eachEnemy.width) {
                 enemyArray.shift();
-                // console.log(enemyArray);
             }
             if (collisionCheck(cactus, eachEnemy)) {
                 endGame();
             }
-            // gotta slice out old enemies to improve performance
-        }
+        } 
         console.log(enemyArray.length);
-    } // end if (cactus.alive)
+    } // else condition here could make code cleaner
     
 }
 
@@ -106,7 +102,11 @@ const endGame = () => {
     cactus.alive = false; // setting cactus to not alive stops rendering everything on screen.
     themeMusic.pause();
     themeMusic.currentTime = 0;
-    startStop.innerText = 'Click to Start'
+    startStop.innerText = 'Click to Try Again';
+    secretMessage.innerText = 'No, Cactus!';
+    secretMessage.style.display = 'block';
+
+
 }
 
 // add keys inputs to create player jumps
@@ -131,8 +131,6 @@ const keydownHandler = (e) => {
 // event listener on game-message
 // create game message variable
 document.addEventListener('DOMContentLoaded', () => {
-    
-    
     // configure the canvas
     // create canvas context
     // set canvas width / height
@@ -141,18 +139,17 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx = game.getContext('2d');
     
     
-    startStop = document.getElementById('game-message')
+    startStop = document.querySelector('#start-stop');
     startStop.addEventListener('click', ()=> {
-        startStop.textContent = 'Click Here to Stop';
-        
-        goCactus.play(); // play go cactus once
-        // create cactus instance
-        
         cactus = new Cactus(60, 250, 32, 32, 'darkgreen'); // y 'floor' is at 250px - cactus.y (32)
+        startStop.textContent = 'Click Here to Stop';
+        goCactus.play(); 
+        // create cactus instance
 
         // listen for keypress to jump
         document.addEventListener('keydown', keydownHandler);
         gameLoop();
+        
     })
 })
 
