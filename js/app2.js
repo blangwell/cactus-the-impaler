@@ -60,7 +60,8 @@ enemyArray[0] = new Enemy(480, 250, 32, 32, '#000000')
 
 let min = 100;
 let max = 300;
-
+let scrollSpeed = 5;
+let bgX = 0;
 const gameLoop = () => {
     // clears screen each frame and requests animationframe from self
     ctx.clearRect(0, 0, game.width, game.height);
@@ -72,12 +73,15 @@ const gameLoop = () => {
         score = Math.round(frameNo / 10); // divide frames by 10 for score
         ctx.font = 'bold 15px Courier';
         ctx.fillText(`Score: ${score}`, 10, 20, 200)
-        // cactus
-        // cactus.render();
         
-        ctx.drawImage(bgImage, 0, 0, game.width, game.height); // this works!
+        // draw cactus to the screen!
+        
+        ctx.drawImage(bgImage, bgX, 0, game.width, game.height); // this works!
+        ctx.drawImage(bgImage, bgX + game.width, 0, game.width, game.height); // this works!
+        bgX -= scrollSpeed;
+        if (bgX === -game.width) bgX = 0;
+        
         ctx.drawImage(cactusImage, cactus.x, cactus.y, cactus.width, cactus.height);
-        
         themeMusic.play();
         // create a random number each iteration
         let random = Math.floor(Math.random() * (+max + 1 - +min)) + +min;
@@ -165,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
     game.setAttribute('height', 320);
     ctx = game.getContext('2d');
     cactusImage.src = './assets/images/cactoos2.png';
-    bgImage.src = './assets/images/placeholder-bg.png'
+    bgImage.src = './assets/images/placeholder-bg.png';
     
     startStop = document.querySelector('#start-stop');
     startStop.addEventListener('click', ()=> {
