@@ -89,7 +89,7 @@ const gameLoop = () => {
             if (eachEnemy.x === random) {
                 enemyArray.push(new Enemy(480, 250, 32, 32, '#000000'))
                
-            } else if (eachEnemy.x === 0 && enemyArray.length < 3) { // in case enemy gets to 0 with no new enemies
+            } else if (eachEnemy.x === 0 && enemyArray.length < 4) { // in case enemy gets to 0 with no new enemies
                 enemyArray.push(new Enemy(480, 250, 32, 32, '#000000'))
             }            // randomEnemy(eachEnemy.x);
 
@@ -99,7 +99,7 @@ const gameLoop = () => {
             }
             // check for collision between cactus and each enemy on the screen
             if (collisionCheck(cactus, eachEnemy)) {
-                endGame();
+                endGame(score);
             }
         } 
         // console.log(enemyArray.length);
@@ -118,15 +118,15 @@ const collisionCheck = (cactus, currentEnemy) => {
         }
 };
 
-const endGame = () => {
+const endGame = (score) => {
     cactus.alive = false; // setting cactus to not alive stops rendering everything on screen.
     frameNo = 0;
-    score = 0;
     themeMusic.pause();
     themeMusic.currentTime = 0;
     startStop.innerText = 'Click Here to Restart';
-    secretMessage.innerText = 'No, Cactus!';
+    secretMessage.innerText = `NO, CACTUS! \nscore: ${score}`;
     secretMessage.style.display = 'block';
+    score = 0;
 };
 
 // add keys inputs to create player jumps
