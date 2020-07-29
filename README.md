@@ -97,7 +97,7 @@ const animate = () => {
     }
 };
 ```
-It is around this point I sought counsel with my instructors. _Special thanks to @romebell, @ahonore42, and @petefitton for their gentle guidance in reapproaching and refactoring this project; and a big thank you to @TaylorDarneille for moral support when the imposter syndrome hit_
+It is around this point I sought counsel with my instructors. _Special thanks to @romebell and @petefitton for their gentle guidance in reapproaching and refactoring this project; and a big thank you to @TaylorDarneille for moral support when the imposter syndrome hit_
 
 ## Attempt 2
 At this point I pseudocoded out the entire project again with new perspective. The general steps were as follows:
@@ -163,7 +163,27 @@ Which leads to the second problem. After running the game for about 75 seconds, 
         enemyArray.shift();
     }
 ```
-I refreshed the page and got a surge of dopamine. The game was running great and enemies were being generated randomly! Next up was to get CACTUS on the screen and make them jump! 
+I refreshed the page and got a surge of dopamine. The game was running great and enemies were being generated randomly! Next up was to get CACTUS on the screen and make them jump! I made a class constructor just for CACTUS, as he behaves differently than the enemies. I drew him as a dark green rectangle to the canvas for testing purposes and created the `keydownHandler()` function.
+```js
+const keydownHandler = (e) => {
+    switch(e.keyCode) {
+        case (87): // w key
+            if (!cactus.jumping) { // if cactus isn't jumping
+                // set jumping to true, to prevent double jumps
+                cactus.jumping = true; 
+                cactus.y -= 50; // move cactus up
+                jumpSound.play();
+                setTimeout(() => {
+                    cactus.y += 50;
+                    cactus.jumping = false; // set jumping back to false
+                }, 600) // wait ~ half second for gravity to take effect
+            } else {
+                console.log('no double jump');
+            }
+    }
+};
+```
+Everything was going great when CACTUS was just a rectangle on the canvas. It was time to add a sprite image to the canvas. This was one of my last big roadblocks in obtaining MVP. Below is how the `Cactus` constructor looked through my testing. It should be a good indicator of my struggle and misunderstanding. 
 ```js
 function Cactus(x, y, width, height, color, src) {
     this.x = x;
@@ -187,5 +207,22 @@ function Cactus(x, y, width, height, color, src) {
     }
 }
 ```
+More Duck Duck Go-fu didn't seem to reveal my issue until I stopped and examined the differences between my code and the working examples I was referring to. It turns out the issue was that, instead of passing `drawImage()` and image, I was attempting to pass the image path string. A little more research revealed that the code below would get the sprites rendering. 
+```js
+// create new instance of js Image class
+let cactusImage = new Image(); 
+document.addEventListener('DOMContentLoaded', () => {
+    game.setAttribute('width', 480);
+    game.setAttribute('height', 320);
+    ctx = game.getContext('2d');
+    // SET THE IMAGE SRC PROPERTY
+    cactusImage.src = './assets/images/cactoos2.png';
+```
+Then in the `gameLoop()`
+```js
+ctx.drawImage(cactusImage, cactus.x, cactus.y, cactus.width, cactus.height);
+```
+By learning to pass `ctx.drawImage()` an actual instance of `Image` instead of a string, I was officially ready to add CACTUS' sprites and a background image.
+
 ### Added Feature Branch!
 
