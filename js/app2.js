@@ -3,6 +3,7 @@ let game = document.getElementById('game-space') ;
 let secretMessage = document.getElementById('secret-message')
 let startStop;
 let ctx;
+let gameStarted = false;
 const themeMusic = new Audio('./assets/sounds/three-red-hearts-quiet.wav');
 const goCactus = new Audio('./assets/sounds/go-cactus.wav');
 const jumpSound = new Audio('./assets/sounds/jump.wav');
@@ -43,6 +44,7 @@ function Cactus(x, y, width, height, color) {
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 }
+
 let enemyArray = [];
 enemyArray[0] = new Enemy(480, 250, 32, 32, '#000000')
 
@@ -55,7 +57,6 @@ const gameLoop = () => {
         themeMusic.play();
         cactus.render();
         
-        
         // scroll enemies across x axis
         for (let i = 0; i < enemyArray.length; i++) {
             let eachEnemy = enemyArray[i];
@@ -64,8 +65,9 @@ const gameLoop = () => {
             eachEnemy.x -= 4; // scroll left
             
             // create a random number
+            // CLEAN THIS UP!
             let min = 1000;
-            let max = 50000;
+            let max = 5000;
             let random = Math.floor(Math.random() * (max + 1 - min)) + min;
             // console.log(random);
             if (eachEnemy.x === 100){
@@ -85,7 +87,7 @@ const gameLoop = () => {
         console.log(enemyArray.length);
     } // else condition here could make code cleaner
     
-}
+};
 
 const collisionCheck = (cactus, currentEnemy) => {
     if (cactus.x + cactus.width > currentEnemy.x && // will need to be refactored for enemy class
@@ -96,18 +98,16 @@ const collisionCheck = (cactus, currentEnemy) => {
             collisionSound.play();
             return true;
         }
-}
+};
 
 const endGame = () => {
     cactus.alive = false; // setting cactus to not alive stops rendering everything on screen.
     themeMusic.pause();
     themeMusic.currentTime = 0;
-    startStop.innerText = 'Click to Try Again';
+    startStop.innerText = 'Click Here to Restart';
     secretMessage.innerText = 'No, Cactus!';
     secretMessage.style.display = 'block';
-
-
-}
+};
 
 // add keys inputs to create player jumps
 const keydownHandler = (e) => {
@@ -141,17 +141,22 @@ document.addEventListener('DOMContentLoaded', () => {
     
     startStop = document.querySelector('#start-stop');
     startStop.addEventListener('click', ()=> {
-        cactus = new Cactus(60, 250, 32, 32, 'darkgreen'); // y 'floor' is at 250px - cactus.y (32)
-        startStop.textContent = 'Click Here to Stop';
-        goCactus.play(); 
-        // create cactus instance
+        if (!gameStarted) {
+            gameStarted = true;
+            secretMessage.style.diplay = 'none';
+            cactus = new Cactus(60, 250, 32, 32, 'darkgreen'); // y 'floor' is at 250px - cactus.y (32)
+            cactus.alive = true;
+            startStop.textContent = 'Click Here to Restart';
+            goCactus.play(); 
+            
+            // create cactus instance
+            // listen for keypress to jump
+            document.addEventListener('keydown', keydownHandler);
+            gameLoop();
 
-        // listen for keypress to jump
-        document.addEventListener('keydown', keydownHandler);
-        gameLoop();
-        
+        } else if (gameStarted) {
+            location.reload(); // WAY easier than the logic i was trying to implement
+        }
+
     })
-})
-
-
-
+});
