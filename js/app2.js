@@ -4,6 +4,8 @@ let secretMessage = document.getElementById('secret-message')
 let startStop;
 let ctx;
 let gameStarted = false;
+let frameNo = 0;
+let score = 0;
 const themeMusic = new Audio('./assets/sounds/three-red-hearts-quiet.wav');
 const goCactus = new Audio('./assets/sounds/go-cactus.wav');
 const jumpSound = new Audio('./assets/sounds/jump.wav');
@@ -51,13 +53,17 @@ enemyArray[0] = new Enemy(480, 250, 32, 32, '#000000')
 
 const gameLoop = () => {
      // clears screen each frame and requests animationframe from self
-    ctx.clearRect(0, 0, game.width, game.height);
-    requestAnimationFrame(gameLoop);
-    if (cactus.alive) {
+     ctx.clearRect(0, 0, game.width, game.height);
+     requestAnimationFrame(gameLoop);
+     if (cactus.alive) {
+        frameNo++;
+        score = Math.round(frameNo / 10);
+        console.log(score);
         themeMusic.play();
         cactus.render();
+        // create a random number each iteration
         let min = 100;
-        let max = 200;
+        let max = 300;
         let random = Math.floor(Math.random() * (+max + 1 - +min)) + +min; 
         
         // scroll enemies across x axis
@@ -67,14 +73,12 @@ const gameLoop = () => {
             eachEnemy.render();
             eachEnemy.x -= 4; // scroll left
             
-            // create a random number
-            console.log(random);
-            if (eachEnemy.x === random){
+            // console.log(random);
+            if (eachEnemy.x === random) {
                 // render enemies at random
                 enemyArray.push(new Enemy(480, 250, 32, 32, '#000000'))
-                // setTimeout(() => {
-                //     , random}) // this won't spit things out at random
-            } else if (eachEnemy.x === 0){
+               
+            } else if (eachEnemy.x === 0) { // in case enemy gets to 0 with no new enemies
                 enemyArray.push(new Enemy(480, 250, 32, 32, '#000000'))
             }            // randomEnemy(eachEnemy.x);
 
@@ -86,23 +90,10 @@ const gameLoop = () => {
                 endGame();
             }
         } 
-        console.log(enemyArray.length);
+        // console.log(enemyArray.length);
     } // else condition here could make code cleaner
     
 };
-
-// const randomEnemy = (eachEnemyX) => {
-//     let min = 100;
-//     let max = 400;
-//     let random = Math.floor(Math.random() * (+max + 1 - +min)) + +min; 
-//     console.log(random);
-//     if (eachEnemyX === random){
-//         enemyArray.push(new Enemy(480, 250, 32, 32, '#000000'))
-//         // render enemies at random
-//         // setTimeout(() => {
-//             // , random})
-//     }
-// }
 
 const collisionCheck = (cactus, currentEnemy) => {
     if (cactus.x + cactus.width > currentEnemy.x && // will need to be refactored for enemy class
@@ -117,6 +108,8 @@ const collisionCheck = (cactus, currentEnemy) => {
 
 const endGame = () => {
     cactus.alive = false; // setting cactus to not alive stops rendering everything on screen.
+    frameNo = 0;
+    score = 0;
     themeMusic.pause();
     themeMusic.currentTime = 0;
     startStop.innerText = 'Click Here to Restart';
