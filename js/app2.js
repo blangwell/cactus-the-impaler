@@ -70,10 +70,12 @@ const gameLoop = () => {
         
         // track and display score 
         score = Math.round(frameNo / 10); // divide frames by 10 for score
-        ctx.font = '15px Arial';
+        ctx.font = 'bold 15px Courier';
         ctx.fillText(`Score: ${score}`, 10, 20, 200)
-        cactus
+        // cactus
         // cactus.render();
+        
+        ctx.drawImage(bgImage, 0, 0, game.width, game.height); // this works!
         ctx.drawImage(cactusImage, cactus.x, cactus.y, cactus.width, cactus.height);
         
         themeMusic.play();
@@ -153,6 +155,8 @@ const keydownHandler = (e) => {
 // click to start game
 // event listener on game-message
 // create game message variable
+let cactusImage = new Image();
+let bgImage = new Image();
 document.addEventListener('DOMContentLoaded', () => {
     // configure the canvas
     // create canvas context
@@ -160,8 +164,8 @@ document.addEventListener('DOMContentLoaded', () => {
     game.setAttribute('width', 480);
     game.setAttribute('height', 320);
     ctx = game.getContext('2d');
-    cactusImage = new Image()
-    cactusImage.src = './assets/images/cactoos2.png' 
+    cactusImage.src = './assets/images/cactoos2.png';
+    bgImage.src = './assets/images/placeholder-bg.png'
     
     startStop = document.querySelector('#start-stop');
     startStop.addEventListener('click', ()=> {
