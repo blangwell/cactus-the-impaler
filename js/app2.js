@@ -53,7 +53,7 @@ const gameLoop = () => {
     // loop theme music
     themeMusic.play();
     ctx.clearRect(0, 0, game.width, game.height);
-    // requestAnimationFrame(gameLoop);
+    requestAnimationFrame(gameLoop);
     if (cactus.alive) {
         cactus.render();
         // enemy = new Enemy(480, 250, 32, 32, '#000000');
@@ -64,19 +64,21 @@ const gameLoop = () => {
             let eachEnemy = enemyArray[i];
             console.log(eachEnemy);
             eachEnemy.render();
-            eachEnemy.x -= 5; // scroll left
+            eachEnemy.x -= 4; // scroll left
             
             // create a random number
             console.log(enemyArray[i].x);
 
             // look into set interval / timeout
-            let min;
-            let max
-            // let random = Math.floor(Math.random() * (+max + 1 - +min)) + +min;
+            let min = 5000;
+            let max = 10000;
+            let random = Math.floor(Math.random() * (max + 1 - min)) + min;
+            console.log(random);
             // let randomNum = Math.floor(Math.random() * Math.floor())
-            if (eachEnemy.x == 100) {
-                // enemy.render()
-                enemyArray.push(new Enemy(480, 250, 32, 32, '#000000')) // set as var if works + enemy.width makes it load off canvas)
+            if (eachEnemy.x === 300){
+                setTimeout(() => {
+                    enemyArray.push(new Enemy(480, 250, 32, 32, '#000000'))
+                    , random}) // this won't spit things out at random
             }
         }
     } // end if (cactus.alive)
@@ -126,7 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // listen for keypress to jump
         document.addEventListener('keydown', keydownHandler);
-        let runGame = setInterval(gameLoop, 60);
+        // let runGame = setInterval(gameLoop, 60);
+        gameLoop();
     })
 })
 
