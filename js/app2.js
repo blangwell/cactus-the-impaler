@@ -63,30 +63,31 @@ let max = 300;
 let scrollSpeed = 1;
 let bgX = 0;
 const gameLoop = () => {
-    // clears screen each frame and requests animationframe from self
+    // CLEAR SCREEN AND ANIMATE EACH FRAME
     ctx.clearRect(0, 0, game.width, game.height);
     requestAnimationFrame(gameLoop);
     if (cactus.alive) {
-        frameNo++; // increment frameNo;
+        frameNo++; // increment frameNo;        
         
-        // track and display score 
-        score = Math.round(frameNo / 10); // divide frames by 10 for score
-        ctx.font = 'bold 15px Courier';
-        ctx.fillText(`Score: ${score}`, 10, 20, 200)
-        
-        // draw cactus to the screen!
-        
+        // DRAW AND SCROLL BACKGROUND  
         ctx.drawImage(bgImage, bgX, 0, game.width, game.height); // this works!
         ctx.drawImage(bgImage, bgX + game.width, 0, game.width, game.height); // this works!
         bgX -= scrollSpeed;
         if (bgX === -game.width) bgX = 0;
         
+        // DRAW SCORE
+        score = Math.round(frameNo / 10); // divide frames by 10 for score
+        ctx.font = 'bold 15px Courier';
+        ctx.fillStyle = 'white';
+        ctx.fillText(`Score: ${score}`, 10, 305, 200)
+        
+        // DRAW CACTUS
         ctx.drawImage(cactusImage, cactus.x, cactus.y, cactus.width, cactus.height);
         themeMusic.play();
         // create a random number each iteration
         let random = Math.floor(Math.random() * (+max + 1 - +min)) + +min;
         
-        // scroll enemies across x axis
+        // GENERATE AND SCROLL ENEMIES
         for (let i = 0; i < enemyArray.length; i++) {
             let eachEnemy = enemyArray[i];
             eachEnemy.render();
@@ -130,7 +131,7 @@ const endGame = (score) => {
     frameNo = 0;
     themeMusic.pause();
     themeMusic.currentTime = 0;
-    startStop.innerText = 'Click Here to Restart';
+    startStop.innerText = 'Click Here to Reset';
     secretMessage.innerText = `NO, CACTUS !\nscore: ${score}`;
     secretMessage.style.display = 'block';
     score = 0;
@@ -176,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!gameStarted) {
             gameStarted = true;
             cactus = new Cactus(60, 250, 32, 32, 'darkgreen', './assets/images/cactoos2.png'); // y 'floor' is at 250px - cactus.y (32)
-            startStop.textContent = 'Click Here to Restart';
+            startStop.textContent = 'Click Here to Reset';
             goCactus.play(); 
 
             // listen for keypress to jump
