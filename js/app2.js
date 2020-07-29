@@ -60,7 +60,7 @@ enemyArray[0] = new Enemy(480, 250, 32, 32, '#000000')
 
 let min = 100;
 let max = 300;
-let scrollSpeed = 5;
+let scrollSpeed = 1;
 let bgX = 0;
 const gameLoop = () => {
     // clears screen each frame and requests animationframe from self
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
     game.setAttribute('height', 320);
     ctx = game.getContext('2d');
     cactusImage.src = './assets/images/cactoos2.png';
-    bgImage.src = './assets/images/placeholder-bg.png';
+    bgImage.src = './assets/images/pixel-bricks.png';
     
     startStop = document.querySelector('#start-stop');
     startStop.addEventListener('click', ()=> {
