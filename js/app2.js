@@ -124,7 +124,7 @@ const endGame = (score) => {
     themeMusic.pause();
     themeMusic.currentTime = 0;
     startStop.innerText = 'Click Here to Restart';
-    secretMessage.innerText = `NO, CACTUS! \nscore: ${score}`;
+    secretMessage.innerText = `NO, CACTUS !\nscore: ${score}`;
     secretMessage.style.display = 'block';
     score = 0;
 };
@@ -146,13 +146,7 @@ const keydownHandler = (e) => {
             }
     }
 };
-// const showScore = (score) => {
-//     let font = new FontFace('Press Start 2P', 'https://fonts.googleapis.com/css2?family=Press+Start+2P')
-//     font.load().then(() => {
-//         ctx.font = 'Press Start 2P';
-//         ctx.strokeText(score, 50, 100)
-//     })
-// }
+
 // click to start game
 // event listener on game-message
 // create game message variable

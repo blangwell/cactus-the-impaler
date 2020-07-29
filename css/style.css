@@ -28,9 +28,10 @@ footer {
 #secret-message {
     position: relative;
     text-align: center;
-    top: -175px;
+    top: -165px;
     display: none;
-    margin: -8px;
+    margin: -30px;
+    line-height: 30px;
     
 }
 
