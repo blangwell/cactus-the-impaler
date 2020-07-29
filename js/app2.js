@@ -56,26 +56,29 @@ const gameLoop = () => {
      ctx.clearRect(0, 0, game.width, game.height);
      requestAnimationFrame(gameLoop);
      if (cactus.alive) {
-        frameNo++;
-        score = Math.round(frameNo / 10);
-        console.log(score);
+        frameNo++; // increment frameNo;
+
+        // track and display score 
+        score = Math.round(frameNo / 10); // divide frames by 10 for score
+        ctx.font = '15px Arial';
+        ctx.fillText(`Score: ${score}`, 10, 20, 200)
+
         themeMusic.play();
         cactus.render();
+
         // create a random number each iteration
         let min = 100;
         let max = 300;
-        let random = Math.floor(Math.random() * (+max + 1 - +min)) + +min; 
-        
+        let random = Math.floor(Math.random() * (+max + 1 - +min)) + +min;
+         
         // scroll enemies across x axis
         for (let i = 0; i < enemyArray.length; i++) {
             let eachEnemy = enemyArray[i];
-            // console.log(eachEnemy);
             eachEnemy.render();
             eachEnemy.x -= 4; // scroll left
             
-            // console.log(random);
+            // render enemies at random
             if (eachEnemy.x === random) {
-                // render enemies at random
                 enemyArray.push(new Enemy(480, 250, 32, 32, '#000000'))
                
             } else if (eachEnemy.x === 0) { // in case enemy gets to 0 with no new enemies
@@ -86,6 +89,7 @@ const gameLoop = () => {
             if (eachEnemy.x < -eachEnemy.width) {
                 enemyArray.shift();
             }
+            // check for collision between cactus and each enemy on the screen
             if (collisionCheck(cactus, eachEnemy)) {
                 endGame();
             }
@@ -134,7 +138,13 @@ const keydownHandler = (e) => {
             }
     }
 };
-
+// const showScore = (score) => {
+//     let font = new FontFace('Press Start 2P', 'https://fonts.googleapis.com/css2?family=Press+Start+2P')
+//     font.load().then(() => {
+//         ctx.font = 'Press Start 2P';
+//         ctx.strokeText(score, 50, 100)
+//     })
+// }
 // click to start game
 // event listener on game-message
 // create game message variable
