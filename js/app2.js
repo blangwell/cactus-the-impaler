@@ -44,40 +44,42 @@ function Cactus(x, y, width, height, color) {
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 }
-let enemyArray = []
-enemyArray[0] = {
-    x : game.width,
-    y : game.height
-}
+let enemyArray = [];
+enemyArray[0] = new Enemy(480, 250, 32, 32, '#000000')
+
 
 const gameLoop = () => {
+
     // loop theme music
     themeMusic.play();
     ctx.clearRect(0, 0, game.width, game.height);
-    ctx.fillStyle = '#000000'
     // requestAnimationFrame(gameLoop);
     if (cactus.alive) {
         cactus.render();
-
+        // enemy = new Enemy(480, 250, 32, 32, '#000000');
+        // enemy.render();
         // render enemies at random
         // scroll enemies across x axis
-        // for loop?
         for (let i = 0; i < enemyArray.length; i++) {
-            enemy = new Enemy (enemyArray[i].x, 100, 32, 32, '#000000');
-            enemy.render();
-            enemyArray[i].x -= 2; // scroll left
-            if (enemyArray[i].x % 507 == 0) {
-                enemyArray.push({
-                    x: game.width + cactus.width,
-                    y: 100
-                })
+            let eachEnemy = enemyArray[i];
+            console.log(eachEnemy);
+            eachEnemy.render();
+            eachEnemy.x -= 5; // scroll left
+            
+            // create a random number
+            console.log(enemyArray[i].x);
+
+            // look into set interval / timeout
+            let min;
+            let max
+            // let random = Math.floor(Math.random() * (+max + 1 - +min)) + +min;
+            // let randomNum = Math.floor(Math.random() * Math.floor())
+            if (eachEnemy.x == 100) {
+                // enemy.render()
+                enemyArray.push(new Enemy(480, 250, 32, 32, '#000000')) // set as var if works + enemy.width makes it load off canvas)
             }
         }
-        // enemy = new Enemy(300, 250, 32, 32, '#000000');
-        // enemy.render();
-        // enemy.x--;
-        
-    }
+    } // end if (cactus.alive)
     
 }
 
