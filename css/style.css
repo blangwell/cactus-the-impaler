@@ -61,9 +61,13 @@ footer {
     border: 6px solid #650a93;
 }
 
+strong {
+    color: #DB230A;
+}
+
 footer p{
     font-size: 14px;
-    max-width: 400px;
+    max-width: 450px;
     float: bottom;
     justify-content: center;
     justify-self: center;
@@ -79,8 +83,10 @@ footer p{
     }
     .button {
         font-size: 10px;
+        margin: 5px;
     }
     footer p{
+        max-width: 425px;
         font-size: 10px;
     }
 
