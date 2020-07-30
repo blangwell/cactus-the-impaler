@@ -121,9 +121,9 @@ const gameLoop = () => {
 
 const collisionCheck = (cactus, currentEnemy) => {
     if ((cactus.x + cactus.width - 20) > currentEnemy.x && // -20 to offset for transparent portion of png
-        cactus.x < currentEnemy.x + currentEnemy.width + 20 &&
-        (cactus.y + cactus.height - 10) > currentEnemy.y &&
-        cactus.y < currentEnemy.y + currentEnemy.height) {
+        cactus.x < currentEnemy.x + (currentEnemy.width + 20) &&
+        (cactus.y + cactus.height - 20) > currentEnemy.y &&
+        cactus.y < (currentEnemy.y + currentEnemy.height + 20)) {
             console.log('collision!')
             collisionSound.play();
             return true;
