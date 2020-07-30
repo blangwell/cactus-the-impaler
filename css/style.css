@@ -11,7 +11,7 @@ body {
 #title {
     padding: 20px;
     line-height: 50px;
-    font-size: 40px;
+    /* font-size: 40px; */
     text-align: center; 
     text-shadow: 1px 1px 3px black;    
     color: #DB230A;
@@ -42,7 +42,7 @@ footer {
     
 }
 
-#start-stop {
+.button {
     margin: 20px 0 10px;
     font-size: 14px;
     border: 6px solid #650a93;
@@ -52,13 +52,13 @@ footer {
     color: lightgrey;
 }
 
-#start-stop:hover {
+.button:hover {
     cursor: pointer;
 }
 
 #instructions {
-    font-size: 14px;
     padding: 10px;
+    margin: 2px; 
     border: 6px solid #650a93;
 }
 
@@ -69,5 +69,20 @@ footer p{
     justify-content: center;
     justify-self: center;
     line-height: 25px;
+    text-align: center;
     color: lightgrey;
+}
+
+@media screen and (max-height: 850px) {
+    #title {
+        font-size: 25px;
+        padding: 5px;
+    }
+    .button {
+        font-size: 10px;
+    }
+    footer p{
+        font-size: 10px;
+    }
+
 }
