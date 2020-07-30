@@ -281,3 +281,11 @@ function Cactus(x, y, width, height) {
     }
 }
 ```
+Now that the game was working as intended, it was time to add the instructions and make it prettier! I used the color scheme generator at https://www.rapidtables.com/web/color/color-scheme.html to give the colors a cohesive look. I then made a new div to the html with the id instructions. In the script file I added an event listener to the new element and had it update the game's `secretMessage` when clicked. 
+```js
+const displayInstructions = () => {
+    secretMessage.innerText = 'Press W to Jump \n Spare Thine Enemies!';
+    secretMessage.style.display = 'block';
+    setTimeout(() => {secretMessage.style.display = 'none'}, 3000)
+};
+```
