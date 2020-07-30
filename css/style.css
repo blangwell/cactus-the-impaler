@@ -5,15 +5,14 @@ body {
     font-family: 'Press Start 2P', sans-serif;
     text-shadow: 1px 1px 3px black;
     color: lightgrey;
-
 }
+
 #title {
     padding: 20px;
     line-height: 50px;
     text-align: center; 
     text-shadow: 1px 1px 3px black;    
     color: #DB230A;
-    
 }
 
 footer {
@@ -30,6 +29,7 @@ footer {
     border: 10px solid #650a93;
     margin: 0px auto; /* this centers the flex container */
 }
+
 #secret-message {
     position: relative;
     text-align: center;
@@ -38,7 +38,6 @@ footer {
     margin: -30px;
     line-height: 30px;
     color: #DB230A;
-    
 }
 
 .button {
@@ -65,7 +64,7 @@ strong {
     color: #DB230A;
 }
 
-footer p{
+footer p {
     font-size: 14px;
     max-width: 450px;
     float: bottom;
@@ -89,5 +88,4 @@ footer p{
         max-width: 425px;
         font-size: 10px;
     }
-
 }

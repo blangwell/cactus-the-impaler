@@ -1,10 +1,17 @@
 # CACTUS THE IMPALER
+[About](##About)\
+[Technology](##Technology)\
+[Attempt One](##attempt-one)\
+[Attempt Two](##attempt-two)\
+[Feature Branch](##feature-branch)
+
+## About
 A pascifistic infinite runner where you play as the fiercest warrior time has ever known: __CACTUS__ (pronounced CACK-TOOS, and don't you forget it, mortal.) __CACTUS__ has slain many foes across the many battles of his bloody career. But now, the warrior heart of __CACTUS__ has softened! He is mortified by his past deeds! He no longer longs for death and destruction! Help guide __CACTUS__ away from the battlefield while sparing the enemies who cower in fear before you. Onward __CACTUS__, to gentler times!
 
 ## Technology
 For this game I utilized HTML5 Canvas, CSS, and Vanilla Javascript. My goal was to attain a minimum viable product by 7/29/20. Minimum viable product in this case was: obstacles scroll towards player, player jumps over obstacles, if player collides with an obstacle a game over state is triggered. In this readme, I will put my failures on display both for posterity and to help anyone who may be in a similar position as the one I found myself while building this game.
 
-## Attempt 1 
+## Attempt One
 I started by creating the scrolling motion with the `animate()` function and testing with rectangles. `xVelocity` tracks how much to increment the speed of the scroll. 
 ```js
 let x = 320;
@@ -99,7 +106,7 @@ const animate = () => {
 ```
 It is around this point I sought counsel with my instructors. _Special thanks to @romebell and @petefitton for their gentle guidance in reapproaching and refactoring this project; and a big thank you to @TaylorDarneille for moral support when the imposter syndrome hit_
 
-## Attempt 2
+## Attempt Two
 At this point I pseudocoded out the entire project again with new perspective. The general steps were as follows:
 - Click to start game
 - Make one enemy scroll left across the canvas
