@@ -222,7 +222,26 @@ Then in the `gameLoop()`
 ```js
 ctx.drawImage(cactusImage, cactus.x, cactus.y, cactus.width, cactus.height);
 ```
-By learning to pass `ctx.drawImage()` an actual instance of `Image` instead of a string, I was officially ready to add CACTUS' sprites and a background image.
+By learning to pass `ctx.drawImage()` an actual instance of `Image` instead of a string, I was officially ready to add CACTUS' sprite and a background image.
+```js
+let cactusImage = new Image();
+let bgImage = new Image();
+...
+cactusImage.src = './assets/images/cactoos2.png';
+bgImage.src = './assets/images/pixel-bricks.png';
+```
+In the `gameLoop` I disabled image smoothing to make the upscaled sprites look clearer. I drew two background images. The first was inside of the canvas with the second just off screen and set them both to scroll. Once one left the screen, the other would scroll. When the first image was equal to `-game.width`, the images' x coordinates were reset to zero. 
+```js
+let scrollSpeed = 1;
+let bgX = 0;
+ctx.imageSmoothingEnabled = false;
+ctx.drawImage(bgImage, bgX, 0, game.width, game.height);
+ctx.drawImage(bgImage, bgX + game.width, 0, game.width, game.height); // this works!
+bgX -= scrollSpeed;
+if (bgX === -game.width) bgX = 0;
+```
+I added an incrementing score counter to the canvas and, with that, MVP had been achieved!
 
-### Added Feature Branch!
+## Feature Branch
+At this point I created a feature branch to experiment with, you guessed it, new features. First I added the enemy wizard sprites and printed them to the screen. I refactored the `Enemy` class method `render()` to draw the enemy sprites to the screen. 
 
