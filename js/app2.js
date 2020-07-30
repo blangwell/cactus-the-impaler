@@ -12,9 +12,7 @@ const goCactus = new Audio('./assets/sounds/go-cactus.wav');
 const jumpSound = new Audio('./assets/sounds/jump.wav');
 const collisionSound = new Audio('./assets/sounds/explode.wav')
 
-// enemies created and scrolled
-// enemies should have an x, y, width, height, color)
-// color will be replaced by src
+// enemy constructor
 function Enemy(x, y, width, height) {
     this.x = x;
     this.y = y;
@@ -25,7 +23,7 @@ function Enemy(x, y, width, height) {
         enemy.src = './assets/images/wizard.png'
         ctx.drawImage(enemy, eachEnemy.x, eachEnemy.y, this.width, this.height);
     }
-}
+};
 
 // player constructor
 function Cactus(x, y, width, height) {
@@ -47,7 +45,7 @@ function Cactus(x, y, width, height) {
         }
         ctx.drawImage(cactusImage, this.x, this.y, this.width, this.height);
     }
-}
+};
 
 
 let min = 100;
@@ -114,12 +112,10 @@ const collisionCheck = (cactus, currentEnemy) => {
     if ((cactus.x + cactus.width - 25) > currentEnemy.x && 
         cactus.x + 10 < (currentEnemy.x + currentEnemy.width) &&
         (cactus.y + cactus.height ) > currentEnemy.y) {
-            console.log('collision!')
             collisionSound.play();
             return true;
         }
 };
-
 
 const keydownHandler = (e) => {
     switch(e.keyCode) {
@@ -132,11 +128,8 @@ const keydownHandler = (e) => {
             cactus.y += 50; // gravity
             cactus.jumping = false;
         }, 600)
-    } else {
-        console.log('no double jump');
     }
-}
-};
+}};
 
 const endGame = (score) => {
     cactus.alive = false; // stops rendering everything on screen.
@@ -154,7 +147,6 @@ const displayInstructions = () => {
     secretMessage.style.display = 'block';
     setTimeout(() => {secretMessage.style.display = 'none'}, 3000)
 };
-
 
 let bgImage = new Image();
 let cactus = new Cactus(50, 240, 64, 64);
@@ -181,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
             gameLoop();
 
         } else if (gameStarted) {
-            location.reload(); // WAY easier than the logic i was trying to implement
+            location.reload();
         }
 
     });
