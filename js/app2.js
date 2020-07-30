@@ -158,9 +158,9 @@ const keydownHandler = (e) => {
 };
 
 const displayInstructions = () => {
-    secretMessage.innerText = 'Press W to Jump \n Spare the Wizards!';
+    secretMessage.innerText = 'Press W to Jump \n Spare Thine Enemies!';
     secretMessage.style.display = 'block';
-    setTimeout(() => {secretMessage.style.display = 'none'}, 2000)
+    setTimeout(() => {secretMessage.style.display = 'none'}, 3000)
 }
 // click to start game
 // event listener on game-message
