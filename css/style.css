@@ -1,15 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap');
 
 body {
-    background-color: gray;
+    background-color: #960ADB;
     font-family: 'Press Start 2P', sans-serif;
+    text-shadow: 1px 1px 3px black
 
 }
-h1 {
+#title {
     padding: 20px;
     line-height: 50px;
-    text-align: center;
-    color: darkred;
+    text-align: center; 
+    text-shadow: 1px 1px 3px black;    
+    color: #DB230A;
+    
 }
 footer {
     display: flex;
@@ -22,7 +26,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 10px solid black;
+    border: 10px solid #650a93;
     margin: 0px auto; /* this centers the flex container */
 }
 #secret-message {
@@ -32,14 +36,19 @@ footer {
     display: none;
     margin: -30px;
     line-height: 30px;
+    color: #DB230A;
     
 }
 
 #start-stop {
     margin: 20px 0 10px;
     font-size: 14px;
-    border: 2px solid black;
-    padding: 5px;
+    border: 6px solid #650a93;
+    border-radius: 2px;
+    padding: 10px;
+    background: #0ADB50;
+    text-shadow: none;
+    color: black;
 }
 
 #start-stop:hover {
@@ -47,13 +56,11 @@ footer {
 }
 
 footer p{
-    /* margin: 50px auto; */
     font-size: 14px;
     max-width: 400px;
-    /* text-align: center; */
     float: bottom;
     justify-content: center;
     justify-self: center;
     line-height: 25px;
+    color: lightgrey;
 }
-

@@ -48,9 +48,9 @@ function Cactus(x, y, width, height) {
         let cactusImage = new Image();
         if (this.jumping) {
             cactusImage.src = './assets/images/cactusv2jump.png'
-        } else if (!this.jumping && score % 3 === 0) {
+        } else if (!this.jumping && score % 2 === 0) {
             cactusImage.src = cactusImageArray[0];
-        } else if (!this.jumping && score % 3 !== 0) {
+        } else if (!this.jumping && score % 2 !== 0) {
             cactusImage.src = cactusImageArray[1];
         }
         ctx.drawImage(cactusImage, this.x, this.y, this.width, this.height);
