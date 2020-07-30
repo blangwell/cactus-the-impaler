@@ -4,12 +4,14 @@
 body {
     background-color: #960ADB;
     font-family: 'Press Start 2P', sans-serif;
-    text-shadow: 1px 1px 3px black
+    text-shadow: 1px 1px 3px black;
+    color: lightgrey;
 
 }
 #title {
     padding: 20px;
     line-height: 50px;
+    font-size: 40px;
     text-align: center; 
     text-shadow: 1px 1px 3px black;    
     color: #DB230A;
@@ -46,13 +48,18 @@ footer {
     border: 6px solid #650a93;
     border-radius: 2px;
     padding: 10px;
-    background: #0ADB50;
-    text-shadow: none;
-    color: black;
+    background: #960ADB;
+    color: lightgrey;
 }
 
 #start-stop:hover {
     cursor: pointer;
+}
+
+#instructions {
+    font-size: 14px;
+    padding: 10px;
+    border: 6px solid #650a93;
 }
 
 footer p{
