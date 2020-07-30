@@ -47,6 +47,7 @@ function Cactus(x, y, width, height) {
         let cactusImageArray = ['./assets/images/cactusv2walk1.png', './assets/images/cactusv2walk2.png']
         let cactusImage = new Image();
         if (this.jumping) {
+            jumpSound.play();
             cactusImage.src = './assets/images/cactusv2jump.png'
         } else if (!this.jumping && score % 2 === 0) {
             cactusImage.src = cactusImageArray[0];
@@ -147,7 +148,7 @@ const keydownHandler = (e) => {
                 cactus.jumping = true; // set jumping to true, as he jumps
                 cactus.y -= 50; // move cactus up 40 px
                 // cactus.cactuasImage.src = './assets/images/cactusv2jump.png'
-                jumpSound.play();
+                // jumpSound.play();
                 setTimeout(() => {
                     cactus.y += 50;
                     cactus.jumping = false;
