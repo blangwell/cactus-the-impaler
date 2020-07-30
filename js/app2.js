@@ -158,6 +158,11 @@ const keydownHandler = (e) => {
     }
 };
 
+const displayInstructions = () => {
+    secretMessage.innerText = 'Press W to Jump \n Spare the Wizards!';
+    secretMessage.style.display = 'block';
+    setTimeout(() => {secretMessage.style.display = 'none'}, 2000)
+}
 // click to start game
 // event listener on game-message
 // create game message variable
@@ -173,6 +178,8 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx = game.getContext('2d');
     // cactusImage.src = './assets/images/cactusv2walk1.png';
     bgImage.src = './assets/images/pixel-bricks.png';
+    instructions = document.getElementById('instructions')
+    instructions.addEventListener('click', displayInstructions);
     startStop = document.querySelector('#start-stop');
     startStop.addEventListener('click', ()=> {
         if (!gameStarted) {
