@@ -6,32 +6,24 @@ let ctx;
 let gameStarted = false;
 let frameNo = 0;
 let score = 0;
+let enemyArray = [];
 const themeMusic = new Audio('./assets/sounds/three-red-hearts-quiet.wav');
 const goCactus = new Audio('./assets/sounds/go-cactus.wav');
 const jumpSound = new Audio('./assets/sounds/jump.wav');
 const collisionSound = new Audio('./assets/sounds/explode.wav')
 
-
-// TODO Click to try again logic
-// TODO Fix randomization
-// TODO Add sprites
-
 // enemies created and scrolled
 // enemies should have an x, y, width, height, color)
 // color will be replaced by src
-function Enemy(x, y, width, height, color) {
+function Enemy(x, y, width, height) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
-    this.color = color;
-    this.alive = true;
     this.render = function (eachEnemy) {
         let enemy = new Image();
         enemy.src = './assets/images/wizard.png'
         ctx.drawImage(enemy, eachEnemy.x, eachEnemy.y, this.width, this.height);
-        // ctx.fillStyle = this.color;
-        // ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 }
 
@@ -57,30 +49,29 @@ function Cactus(x, y, width, height) {
     }
 }
 
-let enemyArray = [];
-enemyArray[0] = new Enemy(480, 260, 48, 48)
 
 let min = 100;
 let max = 300;
 let scrollSpeed = 1;
 let bgX = 0;
+enemyArray[0] = new Enemy(480, 260, 48, 48)
 const gameLoop = () => {
     // CLEAR SCREEN AND ANIMATE EACH FRAME
     ctx.clearRect(0, 0, game.width, game.height);
     requestAnimationFrame(gameLoop);
-    // let cactus = new Cactus(this.cactusSprite, 60, 100, 64, 64);
     if (cactus.alive) {
-        frameNo++; // increment frameNo;        
+        frameNo++;       
         
         // DRAW AND SCROLL BACKGROUND  
         ctx.imageSmoothingEnabled = false;
-        ctx.drawImage(bgImage, bgX, 0, game.width, game.height); // this works!
-        ctx.drawImage(bgImage, bgX + game.width, 0, game.width, game.height); // this works!
+        ctx.drawImage(bgImage, bgX, 0, game.width, game.height); 
+        //2nd bg image to scroll infinitely
+        ctx.drawImage(bgImage, bgX + game.width, 0, game.width, game.height); 
         bgX -= scrollSpeed;
         if (bgX === -game.width) bgX = 0;
         
         // DRAW SCORE
-        score = Math.round(frameNo / 10); // divide frames by 10 for score
+        score = Math.round(frameNo / 10);
         ctx.font = '15px Courier New';
         ctx.fillStyle = 'white';
         ctx.fillText(`Score: ${score}`, game.width - 100, 305, 200)
@@ -99,27 +90,28 @@ const gameLoop = () => {
             // render enemies at random
             if (eachEnemy.x === random) {
                 enemyArray.push(new Enemy(480, 260, 48, 48))
-               
-            } else if (eachEnemy.x === 0 && enemyArray.length < 4) { // in case enemy gets to 0 with no new enemies
+            
+                // in case enemy gets to 0 with no new enemies
+            } else if (eachEnemy.x === 0 && enemyArray.length < 4) {
                 enemyArray.push(new Enemy(480, 260, 48, 48))
             }            // randomEnemy(eachEnemy.x);
 
-            // this removes enemies from enemiesArray once they have fully left the screen
+            // this removes enemies from enemiesArray once they have left the screen
             if (eachEnemy.x < -eachEnemy.width) {
                 enemyArray.shift();
             }
+
             // check for collision between cactus and each enemy on the screen
             if (collisionCheck(cactus, eachEnemy)) {
                 endGame(score);
             }
         } 
-        // console.log(enemyArray.length);
-    } // else condition here could make code cleaner
-    
+    }   
 };
 
 const collisionCheck = (cactus, currentEnemy) => {
-    if ((cactus.x + cactus.width - 25) > currentEnemy.x && // -20 to offset for transparent portion of png
+    // offset for tranparent edges of sprite
+    if ((cactus.x + cactus.width - 25) > currentEnemy.x && 
         cactus.x + 10 < (currentEnemy.x + currentEnemy.width) &&
         (cactus.y + cactus.height ) > currentEnemy.y) {
             console.log('collision!')
@@ -128,8 +120,26 @@ const collisionCheck = (cactus, currentEnemy) => {
         }
 };
 
+
+const keydownHandler = (e) => {
+    switch(e.keyCode) {
+        case (87): // w key
+        if (!cactus.jumping && cactus.alive) { // if cactus isn't jumping
+        cactus.jumping = true; // set jumping to true, as he jumps
+        cactus.y -= 50; // move cactus up 40 px
+        jumpSound.play();
+        setTimeout(() => {
+            cactus.y += 50; // gravity
+            cactus.jumping = false;
+        }, 600)
+    } else {
+        console.log('no double jump');
+    }
+}
+};
+
 const endGame = (score) => {
-    cactus.alive = false; // setting cactus to not alive stops rendering everything on screen.
+    cactus.alive = false; // stops rendering everything on screen.
     frameNo = 0;
     themeMusic.pause();
     themeMusic.currentTime = 0;
@@ -139,48 +149,29 @@ const endGame = (score) => {
     score = 0;
 };
 
-// add keys inputs to create player jumps
-const keydownHandler = (e) => {
-    switch(e.keyCode) {
-        case (87): // w key
-            if (!cactus.jumping && cactus.alive) { // if cactus isn't jumping
-                cactus.jumping = true; // set jumping to true, as he jumps
-                cactus.y -= 50; // move cactus up 40 px
-                jumpSound.play();
-                setTimeout(() => {
-                    cactus.y += 50;
-                    cactus.jumping = false;
-                }, 600)
-            } else {
-                console.log('no double jump');
-            }
-    }
-};
-
 const displayInstructions = () => {
     secretMessage.innerText = 'Press W to Jump \n Spare Thine Enemies!';
     secretMessage.style.display = 'block';
     setTimeout(() => {secretMessage.style.display = 'none'}, 3000)
-}
-// click to start game
-// event listener on game-message
-// create game message variable
-// let cactusImage = new Image();
+};
+
+
 let bgImage = new Image();
 let cactus = new Cactus(50, 240, 64, 64);
 document.addEventListener('DOMContentLoaded', () => {
-    // configure the canvas
-    // create canvas context
-    // set canvas width / height
+    // CONFIGURE CANVAS
     game.setAttribute('width', 480);
     game.setAttribute('height', 320);
     ctx = game.getContext('2d');
-    // cactusImage.src = './assets/images/cactusv2walk1.png';
+
     bgImage.src = './assets/images/pixel-bricks.png';
+
     instructions = document.getElementById('instructions')
     instructions.addEventListener('click', displayInstructions);
+
     startStop = document.querySelector('#start-stop');
     startStop.addEventListener('click', ()=> {
+
         if (!gameStarted) {
             gameStarted = true;
             startStop.textContent = 'Click Here to Reset';
@@ -193,5 +184,5 @@ document.addEventListener('DOMContentLoaded', () => {
             location.reload(); // WAY easier than the logic i was trying to implement
         }
 
-    })
+    });
 });

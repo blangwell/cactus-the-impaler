@@ -72,7 +72,7 @@ const animate = () => {
         requestAnimationFrame(animate);
         ctx.clearRect(0, 0, innerWidth, innerHeight);
         cactus.render();
-        enemy = new Character(x, 100, 32, 32, '#000000'); // randomizer will go here
+        enemy = new Character(x, 100, 32, 32, '#000000'); 
         enemy.render();
         x -= xScrollRate; // move
         if (collisionCheck()) {
@@ -243,5 +243,41 @@ if (bgX === -game.width) bgX = 0;
 I added an incrementing score counter to the canvas and, with that, MVP had been achieved!
 
 ## Feature Branch
-At this point I created a feature branch to experiment with, you guessed it, new features. First I added the enemy wizard sprites and printed them to the screen. I refactored the `Enemy` class method `render()` to draw the enemy sprites to the screen. 
+At this point I created a feature branch to experiment with, you guessed it, new features. First I added the enemy wizard sprites and printed them to the screen. I refactored the `Enemy` class method `render()` to draw the enemy sprites to the screen.
 
+```js
+function Enemy(x, y, width, height) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.render = function (eachEnemy) {
+        let enemy = new Image();
+        enemy.src = './assets/images/wizard.png'
+        ctx.drawImage(enemy, eachEnemy.x, eachEnemy.y, this.width, this.height);
+    }
+}
+```
+Then it came time to animate CACTUS. I refactored the `Cactus` class' `render()` method and created an array to hold CACTUS' running sprites (I decided not to go with traditional sprite sheets to account for time.) I used a conditional tied to the incrementing `score` variable to create the animation logic then called `render()` in the `gameLoop`.
+```js
+function Cactus(x, y, width, height) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height; 
+    this.alive = true;
+    this.jumping = false;
+    this.render = function () {
+        let cactusImageArray = ['./assets/images/cactusv2walk1.png', './assets/images/cactusv2walk2.png']
+        let cactusImage = new Image();
+        if (this.jumping) {
+            cactusImage.src = './assets/images/cactusv2jump.png'
+        } else if (!this.jumping && score % 2 === 0) {
+            cactusImage.src = cactusImageArray[0];
+        } else if (!this.jumping && score % 2 !== 0) {
+            cactusImage.src = cactusImageArray[1];
+        }
+        ctx.drawImage(cactusImage, this.x, this.y, this.width, this.height);
+    }
+}
+```
