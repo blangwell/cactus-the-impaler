@@ -50,7 +50,6 @@ function Cactus(x, y, width, height) {
 
 let min = 100;
 let max = 300;
-let scrollSpeed = 1;
 let bgX = 0;
 enemyArray[0] = new Enemy(480, 260, 48, 48)
 const gameLoop = () => {
@@ -65,7 +64,7 @@ const gameLoop = () => {
         ctx.drawImage(bgImage, bgX, 0, game.width, game.height); 
         //2nd bg image to scroll infinitely
         ctx.drawImage(bgImage, bgX + game.width, 0, game.width, game.height); 
-        bgX -= scrollSpeed;
+        bgX -= 3; // scroll at own rate
         if (bgX === -game.width) bgX = 0;
         
         // DRAW SCORE
