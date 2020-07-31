@@ -302,4 +302,4 @@ const displayInstructions = () => {
 All that was left to do was to merge the feature branch with the master branch and deploy to Github Pages. It's live now! Check it out: https://blangwell.github.io/cactus-the-impaler/ 
 
 ## Conclusion
-This was a great project to level up my JavaScript skills. This is my first game of what I hope will be many. If you made it this far, thank you for sharing in this experience with me. I hope the game brings you a few moments of joy. All my love —Barent
+This was a great project to level up my JavaScript skills. This is the first game of what I hope will be many. If you made it this far, thank you for sharing in this experience with me. I hope the game brings you a few moments of joy. All my love —Barent
