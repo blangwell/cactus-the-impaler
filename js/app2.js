@@ -86,11 +86,11 @@ const gameLoop = () => {
             
             // render enemies at random
             if (eachEnemy.x === random) {
-                enemyArray.push(new Enemy(480, 260, 48, 48))
+                enemyArray.push(new Enemy(480 + cactus.width, 260, 48, 48))
             
                 // in case enemy gets to 0 with no new enemies
             } else if (eachEnemy.x === 0 && enemyArray.length < 4) {
-                enemyArray.push(new Enemy(480, 260, 48, 48))
+                enemyArray.push(new Enemy(480 + cactus.width, 260, 48, 48))
             }            // randomEnemy(eachEnemy.x);
 
             // this removes enemies from enemiesArray once they have left the screen
