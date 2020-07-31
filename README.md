@@ -3,7 +3,9 @@
 [Technology](##Technology)\
 [Attempt One](##attempt-one)\
 [Attempt Two](##attempt-two)\
-[Feature Branch](##feature-branch)
+[Feature Branch](##feature-branch)\
+[Deployment](##deployment)\
+[Conclusion](##conclusion)
 
 ## About
 A pascifistic infinite runner where you play as the fiercest warrior time has ever known: __CACTUS__ (pronounced CACK-TOOS, and don't you forget it, mortal.) __CACTUS__ has slain many foes across the many battles of his bloody career. But now, the warrior heart of __CACTUS__ has softened! He is mortified by his past deeds! He no longer longs for death and destruction! Help guide __CACTUS__ away from the battlefield while sparing the enemies who cower in fear before you. Onward __CACTUS__, to gentler times!
@@ -296,3 +298,8 @@ const displayInstructions = () => {
     setTimeout(() => {secretMessage.style.display = 'none'}, 3000)
 };
 ```
+## Deployment
+All that was left to do was to merge the feature branch with the master branch and deploy to Github Pages. It's live now! Check it out: https://blangwell.github.io/cactus-the-impaler/ 
+
+## Conclusion
+This was a great project to level up my JavaScript skills. This is my first game of what I hope will be many. If you made it this far, thank you for sharing in this experience with me. I hope the game brings you a few moments of joy. All my love —Barent
