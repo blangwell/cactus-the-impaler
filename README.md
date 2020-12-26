@@ -11,7 +11,7 @@
 A pascifistic infinite runner where you play as the fiercest warrior time has ever known: __CACTUS__ (pronounced CACK-TOOS, and don't you forget it, mortal.) __CACTUS__ has slain many foes across the many battles of his bloody career. But now, the warrior heart of __CACTUS__ has softened! He is mortified by his past deeds! He no longer longs for death and destruction! Help guide __CACTUS__ away from the battlefield while sparing the enemies who cower in fear before you. Onward __CACTUS__, to gentler times!
 
 ## Technology
-For this game I utilized HTML5 Canvas, CSS, and Vanilla Javascript. My goal was to attain a minimum viable product by 7/29/20. Minimum viable product in this case was: obstacles scroll towards player, player jumps over obstacles, if player collides with an obstacle a game over state is triggered. In this readme, I will put my failures on display both for posterity and to help anyone who may be in a similar position as the one I found myself while building this game.
+For this game I utilized HTML5 Canvas, CSS, and Vanilla Javascript. My goal was to attain a minimum viable product by 7/29/20. Minimum viable product in this case was: obstacles scroll towards player, player jumps over obstacles, if player collides with an obstacle a game over state is triggered. In this readme, I will put my failures on display both for posterity and to help anyone who may be in a similar position as the one I found myself while building this game. _Note:_ I have left the two defunct scripts (**app.js** and **app1.js**) in the repo for the sake of posterity. For the up to date script, please refer to **app2.js**.
 
 ## Attempt One
 I started by creating the scrolling motion with the `animate()` function and testing with rectangles. `xVelocity` tracks how much to increment the speed of the scroll. 
@@ -109,7 +109,7 @@ const animate = () => {
 It is around this point I sought counsel with my instructors. _Special thanks to @romebell and @petefitton for their gentle guidance in reapproaching and refactoring this project; and a big thank you to @TaylorDarneille for moral support when the imposter syndrome hit_
 
 ## Attempt Two
-At this point I pseudocoded out the entire project again with new perspective. The general steps were as follows:
+At this point I created another new javascript file **app2**. I then pseudocoded out the entire project again with new perspective. The general steps were as follows:
 - Click to start game
 - Make one enemy scroll left across the canvas
 - Randomly generate new enemies to scroll across the canvas
@@ -302,4 +302,4 @@ const displayInstructions = () => {
 All that was left to do was to merge the feature branch with the master branch and deploy to Github Pages. It's live now! Check it out: https://blangwell.github.io/cactus-the-impaler/ 
 
 ## Conclusion
-This was a great project to level up my JavaScript skills. This is my first game of what I hope will be many. If you made it this far, thank you for sharing in this experience with me. I hope the game brings you a few moments of joy. All my love —Barent
+This was a great project to level up my JavaScript skills. This is the first game of what I hope will be many. If you made it this far, thank you for sharing in this experience with me. I hope the game brings you a few moments of joy. All my love —Barent
